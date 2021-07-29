@@ -4,7 +4,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+
+import { BASE_URL } from '../App'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,26 @@ export default function Header(props) {
   const classes = useStyles();
   const { loggedIn, setLoggedIn } = props
   const [userName, setUserName] = useState("")
+
+  const handleSignIn = () => {
+    let config = {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+      },
+      body: JSON.stringify({user: {username: userName}})
+  }
+    fetch(BASE_URL+"users", config)
+    .then(res => res.json())
+    .then(res => {
+      if (res.token) {
+        sessionStorage.setItem("jwt", res.token)
+        setLoggedIn(true)
+      }
+    })
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="sticky">
@@ -49,7 +71,7 @@ export default function Header(props) {
                 className='username-input'
                 id='username-input'
                 />
-            <Button className={classes.signInButton} onClick={()=> setLoggedIn(true)} variant="outlined" size="small" color="inherit">Sign-In</Button>
+            <Button className={classes.signInButton} onClick={handleSignIn} variant="outlined" size="small" color="inherit">Sign-In</Button>
             </>
             }
             </form>

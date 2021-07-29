@@ -6,6 +6,8 @@ import { HashRouter, Route, Link, Switch} from 'react-router-dom';
 import Play from './containers/play'
 import LobbyPage from './containers/LobbyPage';
 
+export const BASE_URL = "http://localhost:3000/";
+
 
 function App() {
   const [isBusy, setBusy] = useState(true)
