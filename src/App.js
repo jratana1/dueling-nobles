@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import Header from './components/header'
 import './App.css';
 import Landing from './containers/landing'
-import { HashRouter, Route, Link } from 'react-router-dom';
+import { HashRouter, Route, Link, Switch} from 'react-router-dom';
 import Play from './containers/play'
+import LobbyPage from './containers/LobbyPage';
 
 
 function App() {
   const [isBusy, setBusy] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const renderLoad = () => {
     // if (isBusy) {
@@ -16,19 +18,17 @@ function App() {
     // } else {
       return (
         <>
-          <div >
-            <ul className="Navbar">
-              <li className="Nav-Item"><Link to="/">About</Link></li> 
-              <li className="Nav-Item"><Link to="/play">Chat-N-Draw</Link></li>
-              <Header/>
-            </ul>
-          </div>
-          <Route exact path="/" >
-            <Landing />
-          </Route>
-          <Route exact path="/play" >
-            <Play />
-          </Route>
+          <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+              <Switch>
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/lobby" render={(props) => (
+                            <LobbyPage {...props} loggedIn={loggedIn} />
+                            )}
+                            />
+                {/* <Route exact path="/room/:id" component={RoomPage} />
+                <Route exact path="/game/:id" component={GamePage} />
+                <Route component={NotFoundPage} /> */}
+              </Switch>
         </>
       )
     // }
@@ -36,9 +36,7 @@ function App() {
 
     return (
     <HashRouter basename='/'>
-      <div className="App">
             {renderLoad()}      
-      </div>
     </HashRouter>
     );
 }

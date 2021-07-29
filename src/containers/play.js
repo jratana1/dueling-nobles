@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import Chat from '../components/chat'
 
 
-function Play() {
+function Play(props) {
     //   const cable = Cable.createConsumer('wss://chat-n-draw.herokuapp.com/cable');
   const cable = Cable.createConsumer('ws://localhost:3000/cable');
   const [currentMessage, setcurrentMessage] = useState("")
@@ -12,6 +12,8 @@ function Play() {
   const [username, setUsername] = useState(""); 
   const [isUsernameConfirmed, setUsernameConfirmed] = useState(false);
   const [roomId, setRoomId] = useState("")
+  const { loggedIn } = props
+
   const chatChannel = useRef(null);
 
   useEffect(
@@ -47,34 +49,8 @@ function Play() {
             })
       }, [])
 
-  // const chatChannel = useMemo(() => {
-  //   return cable.subscriptions.create(
-  //     { channel: 'GameChannel' }
-  //     ,  {
-  //     connected: () => {},
-  //     received: (data) => {
-  //       if (data.action === "chat") {
-  //         setChat(oldArray => [...oldArray, data])
-  //       }
-  //       if (data.action === "subscribed") {
-  //         console.log(data)
-  //         setRoomId(data.channel)
-  //       }
-  //     },
-  //     create: function(chatContent, username, roomId) {
-  //       this.perform('create', {
-  //         content: chatContent,
-  //         user: username,
-  //         room: roomId
-
-  //       });
-  //     },
-  //   });
-  // }, []);
-
-
   const handleSendEvent = () => {
-        if (!currentMessage || !isUsernameConfirmed) { 
+        if (!currentMessage || !loggedIn) { 
           return }
         chatChannel.current.create(currentMessage, username, roomId);
         setcurrentMessage('');
