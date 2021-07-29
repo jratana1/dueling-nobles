@@ -8,7 +8,7 @@ function Chat(props) {
         return chat.map((el) => {
             return (
                 <div className="listitem"  key={`chat_${el.id}`}>
-                    <p>{el.username}</p><p className='chat-created-at'>({ el.created_at })</p><p className='chat-message'>: { el.content }</p>
+                    <p>{el.username} : { el.content }</p>
                 </div>
             );
           })
@@ -32,12 +32,7 @@ function Chat(props) {
                 placeholder='Enter your message...'
                 className='chat-input' />
                 <button onClick={ handleSendEvent } className='send'> Send </button>
-            </div>
-
-
-
-           
-
+            </div> 
     )
 }
 

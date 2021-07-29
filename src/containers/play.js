@@ -1,7 +1,27 @@
 import Cable from 'actioncable';
 
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Chat from '../components/chat'
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+    textAlign: "center"
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 
 function Play(props) {
@@ -13,6 +33,7 @@ function Play(props) {
 
   const chatChannel = useRef(null);
 
+  const classes = useStyles();
   useEffect(
     () => {
       if (document.getElementsByClassName("listitem").length>0) {
@@ -80,6 +101,9 @@ function Play(props) {
 
   return (
       <div className = "play">
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+          Lobby Chat
+          </Typography>
           <Chat chat={chat} currentMessage={currentMessage} updateCurrentMessage={(val) => {setcurrentMessage(val)}} handleSendEvent={handleSendEvent}/>
       </div>
   );
