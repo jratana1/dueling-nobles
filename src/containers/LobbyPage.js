@@ -123,9 +123,8 @@ function humanize(number) {
 }
 
 function LobbyPage(props) {
-
+    
   const classes = useStyles();
-  const [redirect, setRedirect] = useState(null);
   const [waiting, setWaiting] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const { loggedIn } = props
