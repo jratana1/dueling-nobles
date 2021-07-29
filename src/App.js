@@ -1,25 +1,47 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Header from './components/header'
 import './App.css';
+import Landing from './containers/landing'
+import { HashRouter, Route, Link } from 'react-router-dom';
+import Play from './containers/play'
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [isBusy, setBusy] = useState(true)
+
+  const renderLoad = () => {
+    // if (isBusy) {
+    //   setBusy(false)
+    //   return <div>Loading</div>;
+    // } else {
+      return (
+        <>
+          <div >
+            <ul className="Navbar">
+              <li className="Nav-Item"><Link to="/">About</Link></li> 
+              <li className="Nav-Item"><Link to="/play">Chat-N-Draw</Link></li>
+              <Header/>
+            </ul>
+          </div>
+          <Route exact path="/" >
+            <Landing />
+          </Route>
+          <Route exact path="/play" >
+            <Play />
+          </Route>
+        </>
+      )
+    // }
+  }
+
+    return (
+    <HashRouter basename='/'>
+      <div className="App">
+            {renderLoad()}      
+      </div>
+    </HashRouter>
+    );
 }
+
 
 export default App;
