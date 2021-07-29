@@ -40,39 +40,13 @@ function Play(props) {
         document.getElementsByClassName("listitem")[document.getElementsByClassName("listitem").length-1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
       }
     }, [chat])
- 
-    // useEffect(
-    //   () => {
-    //     chatChannel.current = cable.subscriptions.create(
-    //           { channel: 'LobbyChannel' }
-    //           ,  {
-    //           connected: () => {},
-    //           received: (data) => {
-    //             if (data.action === "chat") {
-    //               setChat(oldArray => [...oldArray, data])
-    //             }
-    //             if (data.action === "subscribed") {
-    //               console.log(data)
-    //               setRoomId(data.channel)
-    //             }
-    //           },
-    //           create: function(chatContent, username, roomId) {
-    //             this.perform('create', {
-    //               content: chatContent,
-    //               user: username,
-    //               room: roomId
-        
-    //             });
-    //           }
-    //         })
-    //   }, [])
 
       useEffect(
         () => {
           chatChannel.current = cable.subscriptions.create(
                 { channel: 'LobbyChannel' }
                 ,  {
-                connected: () => {},
+                connected: () => {console.log("connected")},
                 received: (data) => {
                   console.log(data)
                   if (data.action === "chat") {
@@ -90,6 +64,10 @@ function Play(props) {
                   });
                 }
               })
+          
+          return () => {
+                cable.subscriptions.remove(chatChannel.current)
+          }
         }, [])
 
   const handleSendEvent = () => {
