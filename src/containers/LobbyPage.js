@@ -123,7 +123,7 @@ function humanize(number) {
 }
 
 function LobbyPage(props) {
-    
+  
   const classes = useStyles();
   const [waiting, setWaiting] = useState(false);
   const [tabValue, setTabValue] = useState(0);
