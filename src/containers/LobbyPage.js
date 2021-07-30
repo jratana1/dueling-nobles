@@ -1,6 +1,6 @@
 import { useState, useMemo, useContext, useEffect } from "react";
 
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
@@ -19,10 +19,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import { DateTime } from "luxon"
 import ElapsedTime from "../components/elapsedTime"
 
-import Play from "./play"
+import ChatContainer from "./ChatContainer"
 import { BASE_URL } from '../App'
 
 
@@ -134,6 +133,8 @@ function LobbyPage(props) {
   const [tabValue, setTabValue] = useState(0);
   const [games, setGames] = useState([])
   const { loggedIn } = props
+  const history = useHistory()
+
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -179,7 +180,7 @@ function LobbyPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-              <Play loggedIn={loggedIn} title={"Lobby Chat"} channel={"LobbyChannel"}/>
+              <ChatContainer loggedIn={loggedIn} title={"Lobby Chat"} roomId={267}/>
             </Paper>
           </Grid>
         </Box>
@@ -219,7 +220,10 @@ function LobbyPage(props) {
                     ))} */}
                     {games.map( (game) => {
                         return (
-                            <TableRow key={game.id}>
+                            <TableRow key={game.id} 
+                                    onClick={() => {
+                                        history.push(`/room/${game.id}`);
+                              }}>
                                 <TableCell>
                                     {game.name}
                                 </TableCell>

@@ -24,12 +24,12 @@ const useStyles = makeStyles({
 });
 
 
-function Play(props) {
+function ChatContainer(props) {
     //   const cable = Cable.createConsumer('wss://chat-n-draw.herokuapp.com/cable');
   const cable = Cable.createConsumer('ws://localhost:3000/cable');
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
-  const { loggedIn, title, channel, roomId } = props
+  const { loggedIn, title, roomId } = props
 
   const chatChannel = useRef(null);
 
@@ -44,8 +44,9 @@ function Play(props) {
       useEffect(
         () => {
           chatChannel.current = cable.subscriptions.create(
-                { channel: channel,
-                  room_id: roomId } 
+                { channel: "ChatChannel",
+                  room_id: roomId,
+                  jwt: sessionStorage.jwt } 
                 ,  {
                 connected: () => {console.log("connected")},
                 received: (data) => {
@@ -88,4 +89,4 @@ function Play(props) {
   );
 }
  
-export default Play;
+export default ChatContainer;

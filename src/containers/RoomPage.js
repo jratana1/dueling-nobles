@@ -10,7 +10,9 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import Play from "./play"
+import ChatContainer from "./ChatContainer"
+import GameContainer from "./GameContainer";
+import Card from "../components/card"
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -141,29 +143,14 @@ function RoomPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-              <Play loggedIn={loggedIn} roomId ={id} channel={`GameChannel`}/>
+              <ChatContainer loggedIn={loggedIn} title={`Game Room #${id}`} roomId ={id}/>
             </Paper>
           </Grid>
         </Box>
         <Box clone order={{ xs: 1, md: 2 }}>
           <Grid item xs={12} sm={8} md={6}>
             <Paper className={classes.gamesTable}>
-              {/* <div className={classes.actionButtons}>
-              <Tooltip
-                arrow
-                placement="top"
-                title="Create a new game, which will appear in the lobby. You can also invite your friends to join by link!"
-              >
-                <Button
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  disabled={waiting}
-                >
-                  Start Game
-                </Button>
-              </Tooltip>
-            </div> */}
+              <GameContainer></GameContainer>
             </Paper>
             
           </Grid>
@@ -190,7 +177,7 @@ function RoomPage(props) {
         </Box>
       </Grid>
       <Typography variant="body1" align="center" style={{ padding: "16px 0" }}>
-        You'e in the Room Page {id}
+        You're in Room {id}
       </Typography>
     </Container>
   );
