@@ -1,6 +1,6 @@
 import { useState, useMemo, useContext } from "react";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
@@ -128,6 +128,7 @@ function RoomPage(props) {
   const [waiting, setWaiting] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const { loggedIn } = props
+  const { id } = useParams();
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -140,7 +141,7 @@ function RoomPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-              <Play loggedIn={loggedIn} />
+              <Play loggedIn={loggedIn} roomId ={id} channel={`GameChannel`}/>
             </Paper>
           </Grid>
         </Box>
@@ -207,7 +208,7 @@ function RoomPage(props) {
         </Box>
       </Grid>
       <Typography variant="body1" align="center" style={{ padding: "16px 0" }}>
-        Links
+        You'e in the Room Page
       </Typography>
     </Container>
   );

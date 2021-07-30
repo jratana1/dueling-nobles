@@ -29,7 +29,7 @@ function Play(props) {
   const cable = Cable.createConsumer('ws://localhost:3000/cable');
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
-  const { loggedIn, title, channel } = props
+  const { loggedIn, title, channel, roomId } = props
 
   const chatChannel = useRef(null);
 
@@ -45,7 +45,7 @@ function Play(props) {
         () => {
           chatChannel.current = cable.subscriptions.create(
                 { channel: channel,
-                  roomId: 1 } 
+                  room_id: roomId } 
                 ,  {
                 connected: () => {console.log("connected")},
                 received: (data) => {
@@ -61,7 +61,7 @@ function Play(props) {
                   this.perform('speak', {
                     content: currentMessage,
                     user: sessionStorage.jwt,
-                    channel: channel
+                    room_id: roomId
                   });
                 }
               })
