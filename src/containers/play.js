@@ -69,7 +69,7 @@ function Play(props) {
           return () => {
                 cable.subscriptions.remove(chatChannel.current)
           }
-        }, [])
+        }, [roomId])
 
   const handleSendEvent = () => {
         if (!currentMessage || !loggedIn) { 

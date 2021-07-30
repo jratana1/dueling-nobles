@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,6 +18,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Tooltip from "@material-ui/core/Tooltip";
+
+import { DateTime } from "luxon"
+import ElapsedTime from "../components/elapsedTime"
 
 import Play from "./play"
 import { BASE_URL } from '../App'
@@ -129,6 +132,7 @@ function LobbyPage(props) {
   const classes = useStyles();
   const [waiting, setWaiting] = useState(false);
   const [tabValue, setTabValue] = useState(0);
+  const [games, setGames] = useState([])
   const { loggedIn } = props
 
   const handleTabChange = (event, newValue) => {
@@ -148,9 +152,26 @@ function LobbyPage(props) {
         fetch(BASE_URL+"rooms", config)
         .then(res => res.json())
         .then(res => {
-        console.log(res)
+        props.history.push(`/room/${res.id}`)
         })
   }
+
+  useEffect(() => {
+    let config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.jwt}`
+        },
+    }
+
+    fetch(BASE_URL+"rooms", config)
+    .then(res => res.json())
+    .then(res => {
+    setGames(res)
+    })
+  },[])
 
   return (
     <Container>
@@ -180,8 +201,6 @@ function LobbyPage(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Host</TableCell>
-                    <TableCell>Players</TableCell>
-                    <TableCell>Mode</TableCell>
                     <TableCell>Status</TableCell>
                     <TableCell>Created</TableCell>
                   </TableRow>
@@ -198,6 +217,18 @@ function LobbyPage(props) {
                         }}
                       />
                     ))} */}
+                    {games.map( (game) => {
+                        return (
+                            <TableRow key={game.id}>
+                                <TableCell>
+                                    {game.name}
+                                </TableCell>
+                                <TableCell>
+                                    <ElapsedTime value={game.created_at} />
+                                </TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
               </Table>
             </TableContainer>

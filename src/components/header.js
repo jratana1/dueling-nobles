@@ -5,6 +5,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import { useHistory } from 'react-router-dom';
+
+
 import { BASE_URL } from '../App'
 
 
@@ -32,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const { loggedIn, setLoggedIn } = props
+  const history = useHistory()
   const [userName, setUserName] = useState("")
 
   const handleSignIn = () => {
@@ -57,9 +61,13 @@ export default function Header(props) {
     <div className={classes.root}>
       <AppBar position="sticky">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Dueling Nobles
+
+        
+          <Typography onClick={() => history.push('/lobby')} variant="h6" className={classes.title}>
+              Dueling Nobles
           </Typography>
+
+
           <form className={classes.form} noValidate autoComplete="off">
           {loggedIn ? <Typography variant="h6" className={classes.title}>Logged In: {userName}</Typography> :
             <>
