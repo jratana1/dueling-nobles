@@ -3,7 +3,7 @@ import Header from './components/header'
 import './App.css';
 import Landing from './containers/landing'
 import { HashRouter, Route, Link, Switch} from 'react-router-dom';
-import Play from './containers/play'
+import RoomPage from './containers/RoomPage'
 import LobbyPage from './containers/LobbyPage';
 
 export const BASE_URL = "http://localhost:3000/";
@@ -27,8 +27,11 @@ function App() {
                             <LobbyPage {...props} loggedIn={loggedIn} />
                             )}
                             />
-                {/* <Route exact path="/room/:id" component={RoomPage} />
-                <Route exact path="/game/:id" component={GamePage} />
+                <Route exact path="/room/:id" render={(props) => (
+                            <RoomPage {...props} loggedIn={loggedIn} />
+                            )}
+                            />
+                {/* <Route exact path="/game/:id" component={GamePage} />
                 <Route component={NotFoundPage} /> */}
               </Switch>
         </>

@@ -20,8 +20,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import Play from "./play"
-import { BASE_URL } from '../App'
-
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -124,7 +122,7 @@ function humanize(number) {
   );
 }
 
-function LobbyPage(props) {
+function RoomPage(props) {
   
   const classes = useStyles();
   const [waiting, setWaiting] = useState(false);
@@ -135,22 +133,6 @@ function LobbyPage(props) {
     setTabValue(newValue);
   };
 
-  const createRoom = () => {
-        let config = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.jwt}`
-            },
-        }
-
-        fetch(BASE_URL+"rooms", config)
-        .then(res => res.json())
-        .then(res => {
-        console.log(res)
-        })
-  }
 
   return (
     <Container>
@@ -158,7 +140,7 @@ function LobbyPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-              <Play loggedIn={loggedIn} title={"Lobby Chat"} channel={"LobbyChannel"}/>
+              <Play loggedIn={loggedIn} />
             </Paper>
           </Grid>
         </Box>
@@ -215,10 +197,9 @@ function LobbyPage(props) {
                   variant="contained"
                   fullWidth
                   color="primary"
-                  onClick={createRoom}
                   disabled={waiting}
                 >
-                  Create a Room
+                  Start Game
                 </Button>
               </Tooltip>
             </div>
@@ -232,4 +213,4 @@ function LobbyPage(props) {
   );
 }
 
-export default LobbyPage;
+export default RoomPage;

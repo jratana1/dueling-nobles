@@ -29,7 +29,7 @@ function Play(props) {
   const cable = Cable.createConsumer('ws://localhost:3000/cable');
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
-  const { loggedIn } = props
+  const { loggedIn, title, channel } = props
 
   const chatChannel = useRef(null);
 
@@ -44,11 +44,12 @@ function Play(props) {
       useEffect(
         () => {
           chatChannel.current = cable.subscriptions.create(
-                { channel: 'LobbyChannel' }
+                { channel: channel,
+                  roomId: 1 } 
                 ,  {
                 connected: () => {console.log("connected")},
                 received: (data) => {
-                  console.log(data)
+
                   if (data.action === "chat") {
                     setChat(oldArray => [...oldArray, data])
                   }
@@ -59,8 +60,8 @@ function Play(props) {
                 speak: function(currentMessage) {
                   this.perform('speak', {
                     content: currentMessage,
-                    user: sessionStorage.jwt
-          
+                    user: sessionStorage.jwt,
+                    channel: channel
                   });
                 }
               })
@@ -80,7 +81,7 @@ function Play(props) {
   return (
       <div className = "play">
           <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Lobby Chat
+          {title}
           </Typography>
           <Chat chat={chat} currentMessage={currentMessage} updateCurrentMessage={(val) => {setcurrentMessage(val)}} handleSendEvent={handleSendEvent}/>
       </div>
