@@ -82,7 +82,7 @@ export default function Card(props) {
         backgroundColor: `rgba(217, 195, 195, 1)`,
         backgroundRepeat  : 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: 'contain',
+        backgroundSize: '100% 100%',
         opacity: opacity.interpolate(o => 1 - o),
         transform,}}
         >
@@ -93,7 +93,7 @@ export default function Card(props) {
         backgroundColor: `rgba(217, 195, 195, 1)`,
         backgroundRepeat  : 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: 'contain',
+        backgroundSize: '100% 100%',
         opacity,
         transform: transform.interpolate(t => `${t} rotateY(180deg)`),
         }} >

@@ -129,6 +129,7 @@ function RoomPage(props) {
   const classes = useStyles();
   const [waiting, setWaiting] = useState(false);
   const [tabValue, setTabValue] = useState(0);
+  const [status, setStatus] = useState("Open")
   const { loggedIn } = props
   const { id } = useParams();
 
@@ -136,6 +137,9 @@ function RoomPage(props) {
     setTabValue(newValue);
   };
 
+  const startGame = () => {
+      setStatus("Started")
+  }
 
   return (
     <Container>
@@ -150,7 +154,7 @@ function RoomPage(props) {
         <Box clone order={{ xs: 1, md: 2 }}>
           <Grid item xs={12} sm={8} md={6}>
             <Paper className={classes.gamesTable}>
-              <GameContainer></GameContainer>
+              <GameContainer status={status} setStatus={setStatus}></GameContainer>
             </Paper>
             
           </Grid>
@@ -158,20 +162,15 @@ function RoomPage(props) {
         <Box clone order={{ xs: 2, md: 3 }} className={classes.buttonColumn}>
           <Grid item xs={12} sm={4} md={3}>
             <div className={classes.actionButtons}>
-              <Tooltip
-                arrow
-                placement="top"
-                title="Create a new game, which will appear in the lobby. You can also invite your friends to join by link!"
-              >
                 <Button
                   variant="contained"
                   fullWidth
                   color="primary"
                   disabled={waiting}
+                  onClick={startGame}
                 >
                   Start Game
                 </Button>
-              </Tooltip>
             </div>
           </Grid>
         </Box>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import CardContainer from './CardContainer'
 
 export function getRandom(arr, n) {
@@ -34,21 +34,67 @@ export function shuffle(array) {
     return array;
   }
 
-
 export default function GameContainer(props)  {
 const [deck, setDeck] = useState([...Array(52).keys()]);
+const [drawPile, setDrawPile] = useState([...Array(52).keys()])
+
 const [count, setCount] = useState(0)
+const stageCanvasRef = useRef(null);
+
+const [playerHand, setPlayerHand] = useState([])
+const [opponentHand, setOpponentHand] = useState([])
+const { status, setStatus} = props
+const [height, setHeight] =  useState(null)
+const [width, setWidth] =  useState(null)
+
+
+
+useEffect( () => {
+    // The 'current' property contains info of the reference:
+    // align, title, ... , width, height, etc.
+    if(stageCanvasRef.current){
+
+        setHeight(stageCanvasRef.current.offsetHeight)
+        setWidth(stageCanvasRef.current.offsetWidth)
+    }
+}, [stageCanvasRef])
+
+useEffect( () => {
+    let Hand = playerHand
+    let oppHand = opponentHand
+    if (status === "Started") {
+    getRandom(drawPile,5).forEach((card) => {
+        Hand.push({id: drawPile[drawPile.length-1], image: card})
+        drawPile.pop()
+        oppHand.push({id: drawPile[drawPile.length-1], image: "blank"})
+        drawPile.pop()
+        setDrawPile(drawPile)
+    })
+    setPlayerHand(Hand)
+    setOpponentHand(oppHand)
+    }
+
+}, [status])
     
 const renderDeck = () => {
-
     return (
         deck.map( (card) =>  {
-    return <CardContainer key={card} cardId={card} count={count} setCount={setCount}></CardContainer>
+    return <CardContainer   
+                            setplayerHand={setPlayerHand}
+                            playerHand={playerHand} 
+                            opponentHand={opponentHand}
+                            height={height} 
+                            width={width} 
+                            key={card} 
+                            cardId={card} 
+                            count={count} 
+                            setCount={setCount}>
+            </CardContainer>
     }))
 }
 
 return (
-    <div className="Reading-Container">
+    <div className="Reading-Container" ref = {stageCanvasRef}>
         {renderDeck()}    
     </div>
 )
