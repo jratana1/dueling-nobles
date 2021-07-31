@@ -37,12 +37,13 @@ export function shuffle(array) {
 
 export default function GameContainer(props)  {
 const [deck, setDeck] = useState([...Array(52).keys()]);
+const [count, setCount] = useState(0)
     
 const renderDeck = () => {
 
     return (
         deck.map( (card) =>  {
-    return <CardContainer key={card} cardId={card}></CardContainer>
+    return <CardContainer key={card} cardId={card} count={count} setCount={setCount}></CardContainer>
     }))
 }
 

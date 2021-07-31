@@ -12,27 +12,18 @@ code {
     monospace;
 }
 
-.Card-Container {
-  width: 25vh;
-  height: 40vh;
-  will-change: transform;
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-}
 
 .Card-Front, .Card-Back {
   background-color: white;
   background-size: auto 85%;
   background-repeat: no-repeat;
   background-position: center center;
-  width: 25vh;
+  width: 100%;
   max-width: 300px;
-  height: 40vh;
+  height: 100%;
   max-height: 570px;
   will-change: transform;
-  border-radius: 10px;
-  box-shadow: 0px 8px 10px 0px rgba(50, 50, 73, 0.4);
+  box-shadow: 0px 1px 3px 0px rgba(170, 170, 170, 0.945);
   display: flex;
   flex-direction: column;
   padding: 1%;
@@ -53,9 +44,20 @@ code {
 }
 
 .Reading-Container{
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column-reverse;
   position: relative;
   z-index: 1000;
+}
+
+.Card-Reading-Container {
+  width: 16%;
+  height: 23%;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: -1;
 }
