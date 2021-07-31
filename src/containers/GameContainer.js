@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import CardContainer from './CardContainer'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFlag, setFlagFalse } from "../actions/readingsActions";
+import { setFlag, setFlagFalse, dealHands } from "../actions/gameActions";
 import Cable from 'actioncable';
 
 export function getRandom(arr, n) {
@@ -39,18 +39,17 @@ export function shuffle(array) {
 
 export default function GameContainer(props)  {
 const [deck, setDeck] = useState([...Array(52).keys()]);
-const [drawPile, setDrawPile] = useState([...Array(52).keys()])
-
 const [count, setCount] = useState(0)
 const stageCanvasRef = useRef(null);
 
-const [playerHand, setPlayerHand] = useState([])
-const [opponentHand, setOpponentHand] = useState([])
 const { status, setStatus} = props
 const [height, setHeight] =  useState(null)
 const [width, setWidth] =  useState(null)
 
-const flag = useSelector(state => state.readings.flag);
+const playerHand = useSelector(state => state.game.playerHand);
+const opponentHand = useSelector(state => state.game.opponentHand);
+const drawPile = useSelector(state => state.game.drawPile);
+
 const dispatch = useDispatch();
 
 
@@ -66,19 +65,16 @@ useEffect( () => {
 }, [stageCanvasRef])
 
 useEffect( () => {
-    let Hand = playerHand
-    let oppHand = opponentHand
+
     if (status === "Started") {
     getRandom(drawPile,5).forEach((card) => {
-        Hand.push({id: drawPile[drawPile.length-1], image: card})
-        drawPile.pop()
-        oppHand.push({id: drawPile[drawPile.length-1], image: "blank"})
-        drawPile.pop()
-        setDrawPile(drawPile)
+        let draw= drawPile.pop()
+        draw.image = card.id
+        playerHand.push(draw)   
+        draw= drawPile.pop()  
+        opponentHand.push(draw)
     })
-    setPlayerHand(Hand)
-    setOpponentHand(oppHand)
-    dispatch(setFlag())
+    dispatch(dealHands({playerHand: playerHand, opponentHand: opponentHand, drawPile: drawPile}))
     }
 
 }, [status])
@@ -87,9 +83,6 @@ const renderDeck = () => {
     return (
         deck.map( (card) =>  {
     return <CardContainer   
-                            setplayerHand={setPlayerHand}
-                            playerHand={playerHand} 
-                            opponentHand={opponentHand}
                             height={height} 
                             width={width} 
                             key={card} 

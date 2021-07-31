@@ -3,18 +3,23 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDrag } from 'react-use-gesture'
 import Card from '../components/card'
 import { useDispatch, useSelector } from "react-redux";
+import { setFlag, drawCard } from "../actions/gameActions";
+
 
 export default function CardContainer(props)  {
   const [flipped, setFlipped] = useState(false)
 
-  const { count, setCount, height, width, playerHand, opponentHand, cardId } = props
+  const { count, setCount, height, width, cardId } = props
   const [self] = useState(cardId)
   const [ tap, setTap] = useState(false)
   const stageCanvasRef = useRef(null);
   const [cardHeight, setCardHeight] =  useState(null)
   const [cardWidth, setCardWidth] =  useState(null)
-  const flag = useSelector(state => state.readings.flag);
+  const flag = useSelector(state => state.game.flag);
   const dispatch = useDispatch();
+  const playerHand = useSelector(state => state.game.playerHand);
+  const opponentHand = useSelector(state => state.game.opponentHand);
+  const drawPile = useSelector(state => state.game.drawPile);
 
   const [{ pos }, setPos] = useSpring(() => ({ pos: [0, 0], config: {mass: 2, tension: 100, friction: 50}
   }))
@@ -51,7 +56,7 @@ export default function CardContainer(props)  {
           }
         }
     }
-  },[flag])
+  },[flag, playerHand, opponentHand])
   
     const bind = useDrag(
         ({ down, movement: xy, tap }) => {
@@ -65,9 +70,21 @@ export default function CardContainer(props)  {
 
     
     const onCardClick = (event) => { 
-      if (tap) setFlipped(state => !state)
       setCount(count+1)
       event.currentTarget.style.zIndex= count
+
+      let cardId= event.currentTarget.id.split("-")[1]
+      let found = drawPile.find((element) => {
+        console.log(element.id === self)
+        return(element.id === self)
+        }
+      )
+      if(found){
+              dispatch(drawCard(found))
+      }
+
+
+
       }
 
     const onMouseDown = (event) => {

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import readingsReducer from './readingsReducer'
+import gameReducer from './gameReducer'
 import count from './counterReducer'
 
 
 const rootReducer = combineReducers({
-  readings: readingsReducer,
+  game: gameReducer,
   count: count
 });
 
