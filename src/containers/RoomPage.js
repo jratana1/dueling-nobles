@@ -139,6 +139,7 @@ function RoomPage(props) {
 
   const startGame = () => {
       setStatus("Started")
+    //   need websocket to send start to other player?
   }
 
   return (

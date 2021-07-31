@@ -207,17 +207,6 @@ function LobbyPage(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {Object.keys(tabValue === 0 ? games : myGames)
-                    .reverse()
-                    .map((gameId) => (
-                      <GameInfoRow
-                        key={gameId}
-                        gameId={gameId}
-                        onClick={() => {
-                          if (!waiting) setRedirect(`/room/${gameId}`);
-                        }}
-                      />
-                    ))} */}
                     {games.map( (game) => {
                         return (
                             <TableRow key={game.id} 

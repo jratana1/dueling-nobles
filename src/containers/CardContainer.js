@@ -2,6 +2,7 @@ import { useSpring, animated as a, interpolate } from "react-spring";
 import React, { useState, useRef, useEffect } from "react";
 import { useDrag } from 'react-use-gesture'
 import Card from '../components/card'
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CardContainer(props)  {
   const [flipped, setFlipped] = useState(false)
@@ -12,6 +13,8 @@ export default function CardContainer(props)  {
   const stageCanvasRef = useRef(null);
   const [cardHeight, setCardHeight] =  useState(null)
   const [cardWidth, setCardWidth] =  useState(null)
+  const flag = useSelector(state => state.readings.flag);
+  const dispatch = useDispatch();
 
   const [{ pos }, setPos] = useSpring(() => ({ pos: [0, 0], config: {mass: 2, tension: 100, friction: 50}
   }))
@@ -48,7 +51,7 @@ export default function CardContainer(props)  {
           }
         }
     }
-  })
+  },[flag])
   
     const bind = useDrag(
         ({ down, movement: xy, tap }) => {

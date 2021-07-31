@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import CardContainer from './CardContainer'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFlag, setFlagFalse } from "../actions/readingsActions";
+import Cable from 'actioncable';
 
 export function getRandom(arr, n) {
   var result = new Array(n),
@@ -47,6 +50,9 @@ const { status, setStatus} = props
 const [height, setHeight] =  useState(null)
 const [width, setWidth] =  useState(null)
 
+const flag = useSelector(state => state.readings.flag);
+const dispatch = useDispatch();
+
 
 
 useEffect( () => {
@@ -72,6 +78,7 @@ useEffect( () => {
     })
     setPlayerHand(Hand)
     setOpponentHand(oppHand)
+    dispatch(setFlag())
     }
 
 }, [status])
