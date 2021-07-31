@@ -1,7 +1,8 @@
 import { useSpring, animated as a } from "react-spring";
-import React, {useState} from "react";
+import React from "react";
 
 import cardBack from '../assets/card-back1.png'
+import blank from '../assets/card-blank.png'
 import clubs1 from '../assets/card-clubs-1.png'
 import clubs2 from '../assets/card-clubs-2.png'
 import clubs3 from '../assets/card-clubs-3.png'
@@ -56,6 +57,7 @@ import spades12 from '../assets/card-spades-12.png'
 import spades13 from '../assets/card-spades-13.png'
 
 export default function Card(props) {
+    const { playerHand } = props
     const {transform, opacity} = useSpring({
         opacity: props.flipped ? 1 : 0,
         transform: `perspective(600px) rotateY(${props.flipped ? 180 : 0}deg)`,
@@ -67,7 +69,14 @@ export default function Card(props) {
                         spades1, spades2, spades3, spades4, spades5, spades6, spades7, spades8, spades9, spades10, spades11, spades12, spades13]
     
     const frontImage = (index) => {
-            return cardImages[index];
+            let found = playerHand.findIndex((card) => card.id===index)
+            if (found !== -1) {
+                return cardImages[playerHand[found].image];
+            }
+            else {
+                return blank
+            }
+            
         }
 
     const frontText = () => {

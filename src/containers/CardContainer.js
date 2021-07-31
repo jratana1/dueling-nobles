@@ -48,7 +48,7 @@ export default function CardContainer(props)  {
           }
         }
     }
-  }, [playerHand, opponentHand])
+  })
   
     const bind = useDrag(
         ({ down, movement: xy, tap }) => {
@@ -80,8 +80,7 @@ export default function CardContainer(props)  {
     return    <a.div id={`card-${props.cardId}`} className="Card-Reading-Container" onClick={(event) => onCardClick(event)} onMouseDown={(e) => onMouseDown(e)} ref = {stageCanvasRef}
                     {...bind()}
                     style={{ transform: translate(), touchAction: 'none'}}>
-                        <Card cardId={props.cardId} flipped= {flipped} />
-                        
+                        <Card playerHand={playerHand} cardId={cardId} flipped= {flipped} />        
               </a.div>
   
 }
