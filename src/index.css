@@ -58,5 +58,6 @@ code {
   align-items: center;
   justify-content: center;
   position: absolute;
-  z-index: -1;
+  /* z-index: -1; */
+  z-Index: 2500,
 }

@@ -1,8 +1,34 @@
 import React, { useEffect, useState, useRef } from 'react'
 import CardContainer from './CardContainer'
+import Card from '../components/card'
+
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+
 import { useDispatch, useSelector } from 'react-redux'
 import { setFlag, setFlagFalse, dealHands } from "../actions/gameActions";
+import blank from '../assets/card-blank.png'
+
 import Cable from 'actioncable';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    discard: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+      width: '7vw',
+      height: '12vh',
+      backgroundImage: `url(${blank})`,
+      backgroundSize: '100% 100%'
+    },
+  }));
 
 export function getRandom(arr, n) {
   var result = new Array(n),
@@ -38,17 +64,21 @@ export function shuffle(array) {
   }
 
 export default function GameContainer(props)  {
+const classes = useStyles();
 const [deck, setDeck] = useState([...Array(52).keys()]);
 const [count, setCount] = useState(0)
-const stageCanvasRef = useRef(null);
+const gameBoxRef = useRef(null);
+const discardRef = useRef(null);
 
 const { status, setStatus} = props
 const [height, setHeight] =  useState(null)
 const [width, setWidth] =  useState(null)
+const [dropZone, setDropZone] = useState(null)
 
 const playerHand = useSelector(state => state.game.playerHand);
 const opponentHand = useSelector(state => state.game.opponentHand);
 const drawPile = useSelector(state => state.game.drawPile);
+const available = useSelector(state => state.game.available);
 
 const dispatch = useDispatch();
 
@@ -57,24 +87,30 @@ const dispatch = useDispatch();
 useEffect( () => {
     // The 'current' property contains info of the reference:
     // align, title, ... , width, height, etc.
-    if(stageCanvasRef.current){
+    if(gameBoxRef.current){
+        setHeight(gameBoxRef.current.offsetHeight)
+        setWidth(gameBoxRef.current.offsetWidth)
 
-        setHeight(stageCanvasRef.current.offsetHeight)
-        setWidth(stageCanvasRef.current.offsetWidth)
+    let relativePos = {};
+    relativePos.dropY = discardRef.current.getBoundingClientRect().y - gameBoxRef.current.getBoundingClientRect().y
+    relativePos.dropX = discardRef.current.getBoundingClientRect().x - gameBoxRef.current.getBoundingClientRect().x
+    setDropZone(relativePos)
+
     }
-}, [stageCanvasRef])
+}, [gameBoxRef, discardRef])
 
 useEffect( () => {
-
     if (status === "Started") {
-    getRandom(drawPile,5).forEach((card) => {
+        let removed_values=[]
+    getRandom(available,5).forEach((imageId) => {
         let draw= drawPile.pop()
-        draw.image = card.id
+        draw.image = imageId
         playerHand.push(draw)   
         draw= drawPile.pop()  
         opponentHand.push(draw)
+        removed_values.push(imageId)
     })
-    dispatch(dealHands({playerHand: playerHand, opponentHand: opponentHand, drawPile: drawPile}))
+    dispatch(dealHands({playerHand: playerHand, opponentHand: opponentHand, drawPile: drawPile, remove: removed_values}))
     }
 
 }, [status])
@@ -83,6 +119,7 @@ const renderDeck = () => {
     return (
         deck.map( (card) =>  {
     return <CardContainer   
+                            dropZone={dropZone}
                             height={height} 
                             width={width} 
                             key={card} 
@@ -94,8 +131,19 @@ const renderDeck = () => {
 }
 
 return (
-    <div className="Reading-Container" ref = {stageCanvasRef}>
-        {renderDeck()}    
+    <div className="Reading-Container" ref = {gameBoxRef}>
+                {renderDeck()}
+        <Grid   container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center">
+            <Grid item xs={3}>
+                <Paper className={classes.discard} ref = {discardRef}>
+                    <Typography>Discard</Typography>
+                </Paper>
+            </Grid>           
+        </Grid>
     </div>
 )
 }

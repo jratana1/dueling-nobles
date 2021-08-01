@@ -57,7 +57,7 @@ import spades12 from '../assets/card-spades-12.png'
 import spades13 from '../assets/card-spades-13.png'
 
 export default function Card(props) {
-    const { playerHand } = props
+    const { playerHand, discard } = props
     const {transform, opacity} = useSpring({
         opacity: props.flipped ? 1 : 0,
         transform: `perspective(600px) rotateY(${props.flipped ? 180 : 0}deg)`,
@@ -69,9 +69,10 @@ export default function Card(props) {
                         spades1, spades2, spades3, spades4, spades5, spades6, spades7, spades8, spades9, spades10, spades11, spades12, spades13]
     
     const frontImage = (index) => {
-            let found = playerHand.findIndex((card) => card.id===index)
-            if (found !== -1) {
-                return cardImages[playerHand[found].image];
+            let found = playerHand.concat(discard).find((card) => card.id===index)
+
+            if (found) {
+                return cardImages[found.image];
             }
             else {
                 return blank

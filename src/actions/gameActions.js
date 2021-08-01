@@ -11,9 +11,10 @@ export const setFlag = () => {
     }
 }
 
-export const setFlagFalse = () => {
+export const playCard = (payload) => {
     return {
-        type: 'SET_FLAG_FALSE',
+        type: 'PLAY_CARD',
+        payload: payload
     }
 }
 
