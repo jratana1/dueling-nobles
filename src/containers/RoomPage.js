@@ -1,6 +1,6 @@
-import { useState, useMemo, useContext } from "react";
+import { useState } from "react";
 
-import { Redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
@@ -12,7 +12,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import ChatContainer from "./ChatContainer"
 import GameContainer from "./GameContainer";
-import Card from "../components/card"
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -76,12 +75,6 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     [theme.breakpoints.down("xs")]: {
-        // position: "absolute",
-        // left: "50%",
-        // bottom: "0",
-        // width: "80%",
-        // "-webkit-transform": "translateX(-50%)",
-        // transform: "translateX(-50%)",
       "& button": {
         marginBottom: theme.spacing(1),
 
@@ -130,7 +123,7 @@ function RoomPage(props) {
   const [waiting, setWaiting] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const [status, setStatus] = useState("Open")
-  const { loggedIn } = props
+  const { loggedIn, cable } = props
   const { id } = useParams();
 
   const handleTabChange = (event, newValue) => {
@@ -139,8 +132,11 @@ function RoomPage(props) {
 
   const startGame = () => {
       setStatus("Started")
-    //   need websocket to send start to other player?
   }
+
+  const joinGame = () => {
+    console.log("joined")
+}
 
   return (
     <Container>
@@ -148,7 +144,7 @@ function RoomPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-              <ChatContainer loggedIn={loggedIn} title={`Game Room #${id}`} roomId ={id}/>
+              <ChatContainer cable={cable} loggedIn={loggedIn} title={`Game Room #${id}`} roomId ={id}/>
             </Paper>
           </Grid>
         </Box>
@@ -163,6 +159,15 @@ function RoomPage(props) {
         <Box clone order={{ xs: 2, md: 3 }} className={classes.buttonColumn}>
           <Grid item xs={12} sm={4} md={3}>
             <div className={classes.actionButtons}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  color="primary"
+                  disabled={waiting}
+                  onClick={joinGame}
+                >
+                  Join Game
+                </Button>
                 <Button
                   variant="contained"
                   fullWidth

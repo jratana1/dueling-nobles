@@ -65,15 +65,17 @@ export function shuffle(array) {
 
 export default function GameContainer(props)  {
 const classes = useStyles();
-const [deck, setDeck] = useState([...Array(52).keys()]);
-const [count, setCount] = useState(0)
+
 const gameBoxRef = useRef(null);
 const discardRef = useRef(null);
 
 const { status, setStatus} = props
+
 const [height, setHeight] =  useState(null)
 const [width, setWidth] =  useState(null)
 const [dropZone, setDropZone] = useState(null)
+const [deck, setDeck] = useState([...Array(52).keys()]);
+const [count, setCount] = useState(0)
 
 const playerHand = useSelector(state => state.game.playerHand);
 const opponentHand = useSelector(state => state.game.opponentHand);

@@ -1,4 +1,3 @@
-import Cable from 'actioncable';
 
 import React, { useEffect, useState, useRef } from 'react';
 import Chat from '../components/chat'
@@ -24,12 +23,10 @@ const useStyles = makeStyles({
 });
 
 
-function ChatContainer(props) {
-    //   const cable = Cable.createConsumer('wss://chat-n-draw.herokuapp.com/cable');
-  const cable = Cable.createConsumer('ws://localhost:3000/cable');
+function ChatContainer(props) {;
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
-  const { loggedIn, title, roomId } = props
+  const { loggedIn, title, roomId, cable } = props
 
   const chatChannel = useRef(null);
 

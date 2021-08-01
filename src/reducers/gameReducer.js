@@ -32,12 +32,6 @@ const gameReducer = (state= initialState, action) => {
         if (found) {
         let newPlayerHand = state.playerHand.slice()
         let newDrawPile = state.drawPile.filter(card => card.id !== found.id)
-        // let newDiscardPile = state.drawPile.filter(card => card.id !== found.id)
-            // if (state.drawPile.includes(found)) {
-            //     let newDrawPile = state.drawPile.filter(card => card.id !== found.id)
-            // } else {
-            //     let newDiscardPile = state.drawPile.filter(card => card.id !== found.id)
-            // }
 
             if(found.image ==="blank") {
                 let newAvailable = state.available.slice()

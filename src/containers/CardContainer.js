@@ -51,7 +51,7 @@ export default function CardContainer(props)  {
     if(playerHand.length>0){
       for(let i=0; i<playerHand.length; i++) {
         if (playerHand[i].id === self) {
-          setPos({pos: [(i*(cardWidth-10))+10, height-cardHeight-10]})
+          setPos({pos: [(i*(.85*cardWidth))+10, height-cardHeight-10]})
           setFlipped(true)
         }
       }
