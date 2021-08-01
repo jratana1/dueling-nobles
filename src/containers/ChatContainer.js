@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 function ChatContainer(props) {;
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
-  const { loggedIn, title, roomId, cable } = props
+  const { loggedIn, title, roomId, cable, setGames} = props
 
   const chatChannel = useRef(null);
 
@@ -54,6 +54,10 @@ function ChatContainer(props) {;
                   if (data.action === "subscribed") {
                     console.log(data)
                   }
+                  if (data.action === "create") {
+                    console.log("Game MADE!")
+                    setGames(oldArray =>  [...oldArray, data.room])
+                  }
                 },
                 speak: function(currentMessage) {
                   this.perform('speak', {
@@ -61,7 +65,7 @@ function ChatContainer(props) {;
                     user: sessionStorage.jwt,
                     room_id: roomId
                   });
-                }
+                },
               })
           
           return () => {

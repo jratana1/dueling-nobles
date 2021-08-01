@@ -69,13 +69,14 @@ const classes = useStyles();
 const gameBoxRef = useRef(null);
 const discardRef = useRef(null);
 
-const { status, setStatus} = props
+const { status, setStatus, roomId, cable} = props
 
 const [height, setHeight] =  useState(null)
 const [width, setWidth] =  useState(null)
 const [dropZone, setDropZone] = useState(null)
 const [deck, setDeck] = useState([...Array(52).keys()]);
 const [count, setCount] = useState(0)
+const gameChannel = useRef(null);
 
 const playerHand = useSelector(state => state.game.playerHand);
 const opponentHand = useSelector(state => state.game.opponentHand);
@@ -84,6 +85,39 @@ const available = useSelector(state => state.game.available);
 
 const dispatch = useDispatch();
 
+useEffect( 
+    () => {
+        gameChannel.current = cable.subscriptions.create(
+              { channel: "GameChannel",
+                room_id: roomId,
+                jwt: sessionStorage.jwt } 
+              ,  {
+              connected: () => {console.log("connected to game")},
+
+              received: (data) => {
+                
+                if (data.action === "chat") {
+                //   setChat(oldArray => [...oldArray, data])
+                }
+                if (data.action === "subscribed") {
+                  console.log(data)
+                }
+              },
+
+              join: function() {
+                this.perform('join', {
+                //   content: currentMessage,
+                  user: sessionStorage.jwt,
+                  room_id: roomId
+                });
+              }
+            })
+        
+        return () => {
+              cable.subscriptions.remove(gameChannel.current)
+        }
+      }, [roomId]
+)
 
 
 useEffect( () => {

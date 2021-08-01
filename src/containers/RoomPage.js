@@ -151,7 +151,7 @@ function RoomPage(props) {
         <Box clone order={{ xs: 1, md: 2 }}>
           <Grid item xs={12} sm={8} md={6}>
             <Paper className={classes.gamesTable}>
-              <GameContainer status={status} setStatus={setStatus}></GameContainer>
+              <GameContainer cable={cable} roomId={id} status={status} setStatus={setStatus}></GameContainer>
             </Paper>
             
           </Grid>
