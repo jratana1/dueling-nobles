@@ -170,6 +170,7 @@ function LobbyPage(props) {
     fetch(BASE_URL+"rooms", config)
     .then(res => res.json())
     .then(res => {
+    debugger
     setGames(res)
     })
   },[])

@@ -1,5 +1,7 @@
-
 import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { setPlayers, updateGame, updateStatus } from "../actions/gameActions";
+
 import Chat from '../components/chat'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -26,17 +28,22 @@ const useStyles = makeStyles({
 function ChatContainer(props) {;
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
-  const { loggedIn, title, roomId, cable, setGames} = props
+  const { loggedIn, title, roomId, cable, setGames, joining, waiting, setJoining, setWaiting} = props
+
+  const players = useSelector(state => state.game.players);
+  const dispatch= useDispatch()
 
   const chatChannel = useRef(null);
 
   const classes = useStyles();
+
+
   useEffect(
-    () => {
-      if (document.getElementsByClassName("listitem").length>0) {
-        document.getElementsByClassName("listitem")[document.getElementsByClassName("listitem").length-1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
-      }
-    }, [chat])
+      () => {
+        if (document.getElementsByClassName("listitem").length>0) {
+          document.getElementsByClassName("listitem")[document.getElementsByClassName("listitem").length-1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+        }
+      }, [chat])
 
       useEffect(
         () => {
@@ -45,7 +52,7 @@ function ChatContainer(props) {;
                   room_id: roomId,
                   jwt: sessionStorage.jwt } 
                 ,  {
-                connected: () => {console.log("connected")},
+                connected: () => {},
                 received: (data) => {
 
                   if (data.action === "chat") {
@@ -55,13 +62,26 @@ function ChatContainer(props) {;
                     console.log(data)
                   }
                   if (data.action === "create") {
-                    console.log("Game MADE!")
                     setGames(oldArray =>  [...oldArray, data.room])
                   }
+                  if (data.action === "join") {
+                    dispatch(setPlayers(data.players))
+                  }
+                  if (data.action === "started") {
+                    console.log(data)
+                    dispatch(updateStatus(data.action))
+                  }
+
                 },
                 speak: function(currentMessage) {
                   this.perform('speak', {
                     content: currentMessage,
+                    user: sessionStorage.jwt,
+                    room_id: roomId
+                  });
+                },
+                joinGame: function() {
+                  this.perform('join', {
                     user: sessionStorage.jwt,
                     room_id: roomId
                   });
@@ -72,6 +92,15 @@ function ChatContainer(props) {;
                 cable.subscriptions.remove(chatChannel.current)
           }
         }, [roomId])
+
+        useEffect(
+          () => {
+            if (joining) {
+            chatChannel.current.joinGame();
+            setJoining(false)
+            }
+        }
+        , [joining])
 
   const handleSendEvent = () => {
         if (!currentMessage || !loggedIn) { 

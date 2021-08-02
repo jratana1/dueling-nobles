@@ -17,10 +17,14 @@ export default function CardContainer(props)  {
   const [cardWidth, setCardWidth] =  useState(null)
   const dispatch = useDispatch();
   const flag = useSelector(state => state.game.flag);
+  // const playerHand = useSelector(state => state.game.game.playerHand);
+  // const opponentHand = useSelector(state => state.game.game.opponentHand);
   const playerHand = useSelector(state => state.game.playerHand);
   const opponentHand = useSelector(state => state.game.opponentHand);
   const drawPile = useSelector(state => state.game.drawPile);
   const discardPile = useSelector(state => state.game.discardPile);
+  // const game = useSelector(state => state.game.game);
+
 
 
   const [{ pos }, setPos] = useSpring(() => ({ pos: [0, 0], config: {mass: 2, tension: 100, friction: 50}

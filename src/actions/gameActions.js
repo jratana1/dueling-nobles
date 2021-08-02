@@ -25,3 +25,31 @@ export const dealHands = (payload) => {
     }
 }
 
+export const joinGame = (payload) => {
+    return {
+        type: 'JOIN_GAME',
+        payload: payload
+    }
+}
+
+export const setPlayers = (payload) => {
+    return {
+        type: 'SET_PLAYERS',
+        payload: payload
+    }
+}
+
+export const updateGame = (payload) => {
+    return {
+        type: 'UPDATE_GAME',
+        payload: payload
+    }
+}
+
+export const updateStatus = (payload) => {
+    return {
+        type: 'UPDATE_STATUS',
+        payload: payload
+    }
+}
+

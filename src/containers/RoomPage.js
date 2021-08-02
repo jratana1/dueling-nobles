@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { joinGame, setPlayers, updateGame, updateStatus } from "../actions/gameActions";
+import { useState, useEffect } from "react";
+import { BASE_URL } from '../App'
 
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -121,21 +124,45 @@ function RoomPage(props) {
   
   const classes = useStyles();
   const [waiting, setWaiting] = useState(false);
-  const [tabValue, setTabValue] = useState(0);
-  const [status, setStatus] = useState("Open")
+  const [joining, setJoining] = useState(false);
+
   const { loggedIn, cable } = props
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const players = useSelector(state => state.game.players);
+  const status = useSelector(state => state.game.game.status);
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
 
-  const startGame = () => {
-      setStatus("Started")
+  useEffect(() => {
+    let config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.jwt}`
+        },
+    }
+
+    fetch(BASE_URL+`rooms/${id}`, config)
+    .then(res => res.json())
+    .then(res => {
+    dispatch(setPlayers(res.players))
+    dispatch(updateGame(res.game))
+
+    if (res.players.player1 && res.players.player2 || Object.values(res.players).includes(sessionStorage.userName)) {
+        setWaiting(true)
+    }
+    })
+  },[])
+
+  const clickStartGame = () => {
+    dispatch(updateStatus("started"))
   }
 
-  const joinGame = () => {
-    console.log("joined")
+  const clickJoinGame = () => {
+    setWaiting(true)
+    setJoining(true)
+    dispatch(joinGame({userName: sessionStorage.userName}))
 }
 
   return (
@@ -144,36 +171,52 @@ function RoomPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-              <ChatContainer cable={cable} loggedIn={loggedIn} title={`Game Room #${id}`} roomId ={id}/>
+              <ChatContainer    joining={joining} 
+                                setJoining={setJoining} 
+                                waiting={waiting}
+                                setWaiting={setWaiting}
+                                cable={cable} loggedIn={loggedIn} title={`Game Room #${id}`} roomId ={id}/>
             </Paper>
           </Grid>
         </Box>
         <Box clone order={{ xs: 1, md: 2 }}>
           <Grid item xs={12} sm={8} md={6}>
             <Paper className={classes.gamesTable}>
-              <GameContainer cable={cable} roomId={id} status={status} setStatus={setStatus}></GameContainer>
+              <GameContainer cable={cable} roomId={id} status={status} ></GameContainer>
             </Paper>
             
           </Grid>
         </Box>
         <Box clone order={{ xs: 2, md: 3 }} className={classes.buttonColumn}>
           <Grid item xs={12} sm={4} md={3}>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Typography variant="subtitle1" align="center" style={{ padding: "8px 0" }}>
+                        Player 1: {players.player1}
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography variant="subtitle1" align="center" style={{ padding: "8px 0" }}>
+                        Player 2: {players.player2}
+                    </Typography>
+                </Grid>
+            </Grid>
             <div className={classes.actionButtons}>
                 <Button
                   variant="contained"
                   fullWidth
                   color="primary"
-                  disabled={waiting}
-                  onClick={joinGame}
+                  disabled={status === "started"}
+                  onClick={clickJoinGame}
                 >
-                  Join Game
+                  {waiting ? "Leave Game" : "Join Game"}
                 </Button>
                 <Button
                   variant="contained"
                   fullWidth
                   color="primary"
-                  disabled={waiting}
-                  onClick={startGame}
+                  disabled={status === "started"}
+                  onClick={clickStartGame}
                 >
                   Start Game
                 </Button>

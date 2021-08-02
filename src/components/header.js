@@ -52,6 +52,7 @@ export default function Header(props) {
     .then(res => {
       if (res.token) {
         sessionStorage.setItem("jwt", res.token)
+        sessionStorage.setItem("userName", userName)
         setLoggedIn(true)
       }
     })
