@@ -128,20 +128,6 @@ useEffect( () => {
               });
             }
           })
-      
-
-    
-
-    //     let removed_values=[]
-    // getRandom(available,5).forEach((imageId) => {
-    //     let draw= drawPile.pop()
-    //     draw.image = imageId
-    //     playerHand.push(draw)   
-    //     draw= drawPile.pop()  
-    //     opponentHand.push(draw)
-    //     removed_values.push(imageId)
-    // })
-    // dispatch(dealHands({playerHand: playerHand, opponentHand: opponentHand, drawPile: drawPile, remove: removed_values}))
     }
 }, [status])
     

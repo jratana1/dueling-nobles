@@ -54,6 +54,7 @@ export default function Header(props) {
         sessionStorage.setItem("jwt", res.token)
         sessionStorage.setItem("userName", userName)
         setLoggedIn(true)
+        history.push('/lobby')
       }
     })
   }

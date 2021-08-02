@@ -11,6 +11,8 @@ function popRandom (array) {
     return array.splice(i, 1)[0]
   }
 
+
+
 const initialState = {
     available: [...Array(52).keys()],
     flag: false,
@@ -85,7 +87,19 @@ const gameReducer = (state= initialState, action) => {
             return {...state, available: newAvailable, drawPile: action.payload.drawPile, playerHand: action.payload.playerHand, opponentHand: action.payload.opponentHand, flag: !state.flag}
 
         case "UPDATE_GAME":
-            return {...state, game: action.payload}
+            let newPlayerHand = state.playerHand.slice()
+            let newDrawPile = state.drawPile.slice()
+            let newOpponentHand = state.opponentHand.slice()
+
+
+            action.payload.playerHand.forEach((imageId) => {
+                    let draw= newDrawPile.pop()
+                    draw.image = imageId
+                    newPlayerHand.push(draw)   
+                    draw= newDrawPile.pop()  
+                    newOpponentHand.push(draw)
+                })
+            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand}
 
         case "UPDATE_STATUS":
             

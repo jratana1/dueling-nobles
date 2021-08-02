@@ -131,6 +131,8 @@ function RoomPage(props) {
   const dispatch = useDispatch();
   const players = useSelector(state => state.game.players);
   const status = useSelector(state => state.game.game.status);
+  const drawPile = useSelector(state => state.game.drawPile);
+
 
 
   useEffect(() => {
@@ -146,6 +148,7 @@ function RoomPage(props) {
     fetch(BASE_URL+`rooms/${id}`, config)
     .then(res => res.json())
     .then(res => {
+        console.log(res)
     dispatch(setPlayers(res.players))
     dispatch(updateGame(res.game))
 
