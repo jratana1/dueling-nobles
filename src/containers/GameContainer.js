@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { setFlag, dealHands } from "../actions/gameActions";
+import { setFlag, dealHands, updateGame } from "../actions/gameActions";
 import blank from '../assets/card-blank.png'
 
 
@@ -112,17 +112,13 @@ useEffect( () => {
 
             received: (data) => {
               
-              if (data.action === "dealing") {
-             console.log("dealing cards")
-              }
-              if (data.action === "subscribed") {
-                console.log(`where both connected ${sessionStorage.userName}`)
+              if (data.action === "dealing") {     
+                console.log(data)     
+                dispatch(updateGame(data))
               }
             },
-
             join: function() {
               this.perform('join', {
-              //   content: currentMessage,
                 user: sessionStorage.jwt,
                 room_id: roomId
               });

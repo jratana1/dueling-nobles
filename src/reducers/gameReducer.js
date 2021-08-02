@@ -22,7 +22,7 @@ const initialState = {
     discardPile: [],
     turn: true,
     players: {player1: "", player2: ""},
-    game: { status: "open",
+    game: { status: null,
             playerHand: [],
             opponentHand: [],
             drawPile: makeDrawPile(),
@@ -91,7 +91,6 @@ const gameReducer = (state= initialState, action) => {
             let newDrawPile = state.drawPile.slice()
             let newOpponentHand = state.opponentHand.slice()
 
-
             action.payload.playerHand.forEach((imageId) => {
                     let draw= newDrawPile.pop()
                     draw.image = imageId
@@ -99,7 +98,7 @@ const gameReducer = (state= initialState, action) => {
                     draw= newDrawPile.pop()  
                     newOpponentHand.push(draw)
                 })
-            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand}
+            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, status: action.payload.status}}
 
         case "UPDATE_STATUS":
             
