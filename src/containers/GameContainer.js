@@ -122,6 +122,12 @@ useEffect( () => {
                 user: sessionStorage.jwt,
                 room_id: roomId
               });
+            },
+            draw: function() {
+                this.perform('draw', {
+                  user: sessionStorage.jwt,
+                  room_id: roomId
+                });
             }
           })
     }
@@ -131,6 +137,7 @@ const renderDeck = () => {
     return (
         deck.map( (card) =>  {
     return <CardContainer   
+                            gameChannel={gameChannel}
                             dropZone={dropZone}
                             height={height} 
                             width={width} 

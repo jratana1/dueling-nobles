@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { joinGame, setPlayers, updateGame, updateStatus } from "../actions/gameActions";
+import { joinGame, setPlayers, updateGame, updateStatus, clearGame } from "../actions/gameActions";
 import { useState, useEffect } from "react";
 import { BASE_URL } from '../App'
 
@@ -156,6 +156,11 @@ function RoomPage(props) {
         setWaiting(true)
     }
     })
+
+    return (() => {
+        dispatch(clearGame())
+    })
+    
   },[])
 
   const clickStartGame = () => {

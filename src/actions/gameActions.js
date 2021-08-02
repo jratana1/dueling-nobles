@@ -53,3 +53,9 @@ export const updateStatus = (payload) => {
     }
 }
 
+export const clearGame = () => {
+    return {
+        type: 'CLEAR_GAME'
+    }
+}
+

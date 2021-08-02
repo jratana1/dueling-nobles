@@ -23,10 +23,10 @@ const initialState = {
     turn: true,
     players: {player1: "", player2: ""},
     game: { status: null,
-            playerHand: [],
-            opponentHand: [],
-            drawPile: makeDrawPile(),
-            discardPile: [],
+            // playerHand: [],
+            // opponentHand: [],
+            // drawPile: makeDrawPile(),
+            // discardPile: [],
             turn: 0}
 }
 
@@ -101,8 +101,19 @@ const gameReducer = (state= initialState, action) => {
             return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, status: action.payload.status}}
 
         case "UPDATE_STATUS":
-            
             return {...state, game: {...state.game, status: action.payload}}
+
+        case "CLEAR_GAME":
+            return {...state, available: [...Array(52).keys()],
+                            flag: false,
+                            playerHand: [],
+                            opponentHand: [],
+                            drawPile: makeDrawPile(),
+                            discardPile: [],
+                            turn: true,
+                            players: {player1: "", player2: ""},
+                            game: { status: null,
+                                turn: 0}}
 
         default:
             return {...state}
