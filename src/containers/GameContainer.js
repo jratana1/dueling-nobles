@@ -116,22 +116,18 @@ useEffect( () => {
                 console.log(data)     
                 dispatch(dealGame(data))
               }
-              if (data.action === "drawing") {     
-                console.log(data)   
+              if (data.action === "drawing") {        
                 console.log("drawing a damn card")  
                 dispatch(drawCard(data))
               }
             },
             join: function() {
               this.perform('join', {
-                user: sessionStorage.jwt,
-                room_id: roomId
               });
             },
-            draw: function() {
+            draw: function(card) {
                 this.perform('draw', {
-                  user: sessionStorage.jwt,
-                  room_id: roomId
+                    card: card
                 });
             }
           })

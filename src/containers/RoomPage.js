@@ -152,7 +152,7 @@ function RoomPage(props) {
     dispatch(setPlayers(res.players))
     dispatch(loadGame(res.game))
 
-    if (res.players.player1 && res.players.player2 || Object.values(res.players).includes(sessionStorage.userName)) {
+    if ((res.players.player1 && res.players.player2) || Object.values(res.players).includes(sessionStorage.userName)) {
         setWaiting(true)
     }
     })

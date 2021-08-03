@@ -89,16 +89,19 @@ export default function CardContainer(props)  {
     function findCard(id) {
       let found = drawPile.find((element) => {
         return(element.id === id)})
-        if (found) {return "drawPile"}
+        if (found) {return {location: "drawPile", card: found}}
         else {
           let found = playerHand.find((element) => {
             return(element.id === id)})
-            if (found) {return "playerHand"}
+            if (found) {return {location: "playerHand", card: found}}
             else {
               let found = discardPile.find((element) => {
                 return(element.id === id)})
-                if (found) {return "discardPile"}
-                else {return "opponentHand"}
+                if (found) {return {location: "discardPile", card: found}}
+                else {
+                  let found = discardPile.find((element) => {
+                    return(element.id === id)})
+                  return {location: "opponentHand", card: found}}
             }
         }
   
@@ -107,13 +110,18 @@ export default function CardContainer(props)  {
       setCount(count+1)
       event.currentTarget.style.zIndex= count
 
-      // dispatch(playCard(self))
       let found = findCard(self)
       // let found = drawPile.find((element) => {
       //   return(element.id === self)})
-        if (found==="drawPile" && status ==="playing"){
-            gameChannel.current.draw()
-        }
+      if (status ==="playing"){
+        gameChannel.current.draw(found)
+      }
+        // if (found.location==="drawPile" && status ==="playing"){
+        //   gameChannel.current.draw(found.card)
+        // }
+        // if (found==="playerHand" && status ==="playing"){
+        //   gameChannel.current.draw(found.card)
+        // }
       // found = drawPile.find((element) => {
       //     return(element.id === self)})
 
