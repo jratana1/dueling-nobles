@@ -58,7 +58,6 @@ function ChatContainer(props) {;
                     setChat(oldArray => [...oldArray, data])
                   }
                   if (data.action === "subscribed") {
-                    console.log(data)
                   }
                   if (data.action === "create") {
                     setGames(oldArray =>  [...oldArray, data.room])
