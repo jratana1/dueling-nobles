@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dueling-nobles/static/css/main.83a9a3e9.chunk.css",
-    "main.js": "/dueling-nobles/static/js/main.7ec75620.chunk.js",
-    "main.js.map": "/dueling-nobles/static/js/main.7ec75620.chunk.js.map",
+    "main.js": "/dueling-nobles/static/js/main.4c5e61fa.chunk.js",
+    "main.js.map": "/dueling-nobles/static/js/main.4c5e61fa.chunk.js.map",
     "runtime-main.js": "/dueling-nobles/static/js/runtime-main.5da1cd70.js",
     "runtime-main.js.map": "/dueling-nobles/static/js/runtime-main.5da1cd70.js.map",
     "static/js/2.df0a711a.chunk.js": "/dueling-nobles/static/js/2.df0a711a.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.5da1cd70.js",
     "static/js/2.df0a711a.chunk.js",
     "static/css/main.83a9a3e9.chunk.css",
-    "static/js/main.7ec75620.chunk.js"
+    "static/js/main.4c5e61fa.chunk.js"
   ]
 }
