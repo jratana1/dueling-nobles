@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { setFlag, dealHands, updateGame } from "../actions/gameActions";
+import { setFlag, dealGame, updateGame, drawCard } from "../actions/gameActions";
 import blank from '../assets/card-blank.png'
 
 
@@ -101,7 +101,7 @@ useEffect( () => {
 }, [gameBoxRef, discardRef])
 
 useEffect( () => {
-    if (status === "started") {
+    if (status === "started"|| status === "playing") {
         console.log("connecting")
         gameChannel.current = cable.subscriptions.create(
             { channel: "GameChannel",
@@ -114,7 +114,12 @@ useEffect( () => {
               
               if (data.action === "dealing") {     
                 console.log(data)     
-                dispatch(updateGame(data))
+                dispatch(dealGame(data))
+              }
+              if (data.action === "drawing") {     
+                console.log(data)   
+                console.log("drawing a damn card")  
+                dispatch(drawCard(data))
               }
             },
             join: function() {
@@ -130,7 +135,12 @@ useEffect( () => {
                 });
             }
           })
+        return () => {
+            cable.subscriptions.remove(gameChannel.current)
+        }
     }
+
+
 }, [status])
     
 const renderDeck = () => {

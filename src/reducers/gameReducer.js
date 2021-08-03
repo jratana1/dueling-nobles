@@ -11,8 +11,6 @@ function popRandom (array) {
     return array.splice(i, 1)[0]
   }
 
-
-
 const initialState = {
     available: [...Array(52).keys()],
     flag: false,
@@ -32,26 +30,26 @@ const initialState = {
 
 const gameReducer = (state= initialState, action) => {
     let found
+    let newPlayerHand
+    let newDrawPile
+    let newOpponentHand
     
     switch(action.type){
         case "DRAW_CARD": 
-            found = state.drawPile.find((element) => {
-                    return(element.id === action.payload)})
-
-                if (found) {
-                let newPlayerHand = state.playerHand.slice()
-                let newDrawPile = state.drawPile.filter(card => card.id !== found.id)
-
-                    if(found.image ==="blank") {
-                        let newAvailable = state.available.slice()
-                        let image_value = popRandom(newAvailable)
-                        found.image= image_value              
-                        newPlayerHand.push(found)
-                        return {...state,  drawPile: newDrawPile, available: newAvailable, playerHand: newPlayerHand, flag: !state.flag}
-                    }
-
-                    newPlayerHand.push(found)
-                    return {...state,  drawPile: newDrawPile, playerHand: newPlayerHand, flag: !state.flag}
+                if (action.payload.player ==="player"){
+                    let newPlayerHand = state.playerHand.slice()
+                    let newDrawPile = state.drawPile.slice()
+                    let card = newDrawPile.pop()
+                    card.image= action.payload.playerHand[action.payload.playerHand.length-1]
+                    newPlayerHand.push(card)
+                    return {...state, drawPile: newDrawPile, playerHand: newPlayerHand}
+                }
+                else if (action.payload.player ==="opponent"){
+                    let newOpponentHand = state.opponentHand.slice()
+                    let newDrawPile = state.drawPile.slice()
+                    let card = newDrawPile.pop()
+                    newOpponentHand.push(card)
+                    return {...state, drawPile: newDrawPile, opponentHand: newOpponentHand}
                 }
             return {...state}
 
@@ -86,10 +84,10 @@ const gameReducer = (state= initialState, action) => {
             let newAvailable= state.available.filter(id => !(action.payload.remove.includes(id)))
             return {...state, available: newAvailable, drawPile: action.payload.drawPile, playerHand: action.payload.playerHand, opponentHand: action.payload.opponentHand, flag: !state.flag}
 
-        case "UPDATE_GAME":
-            let newPlayerHand = state.playerHand.slice()
-            let newDrawPile = state.drawPile.slice()
-            let newOpponentHand = state.opponentHand.slice()
+        case "DEAL_GAME":
+             newPlayerHand = state.playerHand.slice()
+             newDrawPile = state.drawPile.slice()
+             newOpponentHand = state.opponentHand.slice()
 
             action.payload.playerHand.forEach((imageId) => {
                     let draw= newDrawPile.pop()
@@ -98,7 +96,7 @@ const gameReducer = (state= initialState, action) => {
                     draw= newDrawPile.pop()  
                     newOpponentHand.push(draw)
                 })
-            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, status: action.payload.status}}
+            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand}
 
         case "UPDATE_STATUS":
             return {...state, game: {...state.game, status: action.payload}}
@@ -114,6 +112,24 @@ const gameReducer = (state= initialState, action) => {
                             players: {player1: "", player2: ""},
                             game: { status: null,
                                 turn: 0}}
+
+        case "LOAD_GAME":
+            newPlayerHand = state.playerHand.slice()
+            newDrawPile = state.drawPile.slice()
+            newOpponentHand = state.opponentHand.slice()
+                                    
+            action.payload.playerHand.forEach((imageId) => {
+                    let draw= newDrawPile.pop()
+                    draw.image = imageId
+                    newPlayerHand.push(draw)  
+            })
+
+            for(var i=0; i < action.payload.opponentHand ; i++){
+                let draw= newDrawPile.pop()  
+                newOpponentHand.push(draw)
+            }
+        
+        return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, status: action.payload.status}}
 
         default:
             return {...state}

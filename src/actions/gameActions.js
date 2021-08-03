@@ -18,9 +18,9 @@ export const playCard = (payload) => {
     }
 }
 
-export const dealHands = (payload) => {
+export const dealGame = (payload) => {
     return {
-        type: 'DEAL_HANDS',
+        type: 'DEAL_GAME',
         payload: payload
     }
 }
@@ -39,9 +39,9 @@ export const setPlayers = (payload) => {
     }
 }
 
-export const updateGame = (payload) => {
+export const loadGame = (payload) => {
     return {
-        type: 'UPDATE_GAME',
+        type: 'LOAD_GAME',
         payload: payload
     }
 }

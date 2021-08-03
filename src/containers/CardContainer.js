@@ -21,6 +21,8 @@ export default function CardContainer(props)  {
   const opponentHand = useSelector(state => state.game.opponentHand);
   const drawPile = useSelector(state => state.game.drawPile);
   const discardPile = useSelector(state => state.game.discardPile);
+  const status = useSelector(state => state.game.game.status);
+
 
 
   const [{ pos }, setPos] = useSpring(() => ({ pos: [0, 0], config: {mass: 2, tension: 100, friction: 50}
@@ -90,13 +92,12 @@ export default function CardContainer(props)  {
       setCount(count+1)
       event.currentTarget.style.zIndex= count
 
-      dispatch(playCard(self))
-      dispatch(drawCard(self))
+      // dispatch(playCard(self))
 
       let found = drawPile.find((element) => {
         return(element.id === self)})
-        
-        if (found){
+
+        if (found && status ==="playing"){
             gameChannel.current.draw()
         }
       }

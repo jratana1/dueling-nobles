@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { joinGame, setPlayers, updateGame, updateStatus, clearGame } from "../actions/gameActions";
+import { joinGame, setPlayers, loadGame, updateStatus, clearGame } from "../actions/gameActions";
 import { useState, useEffect } from "react";
 import { BASE_URL } from '../App'
 
@@ -150,7 +150,7 @@ function RoomPage(props) {
     .then(res => {
         console.log(res)
     dispatch(setPlayers(res.players))
-    dispatch(updateGame(res.game))
+    dispatch(loadGame(res.game))
 
     if (res.players.player1 && res.players.player2 || Object.values(res.players).includes(sessionStorage.userName)) {
         setWaiting(true)
@@ -160,7 +160,7 @@ function RoomPage(props) {
     return (() => {
         dispatch(clearGame())
     })
-    
+
   },[])
 
   const clickStartGame = () => {
@@ -223,7 +223,7 @@ function RoomPage(props) {
                   variant="contained"
                   fullWidth
                   color="primary"
-                  disabled={status === "started"}
+                  disabled={status === "playing"}
                   onClick={clickStartGame}
                 >
                   Start Game
