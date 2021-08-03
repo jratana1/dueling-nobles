@@ -2,8 +2,8 @@ import { useSpring, animated as a, interpolate} from "react-spring";
 import React, { useState, useRef, useEffect } from "react";
 import { useDrag } from 'react-use-gesture'
 import Card from '../components/card'
-import { useDispatch, useSelector } from "react-redux";
-import { setFlag, drawCard, playCard } from "../actions/gameActions";
+import { useSelector } from "react-redux";
+
 
 
 export default function CardContainer(props)  {
@@ -15,7 +15,6 @@ export default function CardContainer(props)  {
   const stageCanvasRef = useRef(null);
   const [cardHeight, setCardHeight] =  useState(null)
   const [cardWidth, setCardWidth] =  useState(null)
-  const dispatch = useDispatch();
   const flag = useSelector(state => state.game.flag);
   const playerHand = useSelector(state => state.game.playerHand);
   const opponentHand = useSelector(state => state.game.opponentHand);
@@ -87,19 +86,37 @@ export default function CardContainer(props)  {
         { filterTaps: true }
       )
 
-    
+    function findCard(id) {
+      let found = drawPile.find((element) => {
+        return(element.id === id)})
+        if (found) {return "drawPile"}
+        else {
+          let found = playerHand.find((element) => {
+            return(element.id === id)})
+            if (found) {return "playerHand"}
+            else {
+              let found = discardPile.find((element) => {
+                return(element.id === id)})
+                if (found) {return "discardPile"}
+                else {return "opponentHand"}
+            }
+        }
+  
+    }
     const onCardClick = (event) => { 
       setCount(count+1)
       event.currentTarget.style.zIndex= count
 
       // dispatch(playCard(self))
-
-      let found = drawPile.find((element) => {
-        return(element.id === self)})
-
-        if (found && status ==="playing"){
+      let found = findCard(self)
+      // let found = drawPile.find((element) => {
+      //   return(element.id === self)})
+        if (found==="drawPile" && status ==="playing"){
             gameChannel.current.draw()
         }
+      // found = drawPile.find((element) => {
+      //     return(element.id === self)})
+
       }
 
     const onMouseDown = (event) => {
