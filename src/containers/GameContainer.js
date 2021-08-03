@@ -118,6 +118,7 @@ useEffect( () => {
               }
               if (data.action === "drawing") {        
                 console.log("drawing a damn card")  
+                console.log(data)
 
                 dispatch(drawCard(data))
               }

@@ -73,6 +73,22 @@ const gameReducer = (state= initialState, action) => {
                     return {...state, discardPile: newDiscardPile, opponentHand: newOpponentHand}
                 }
             }  
+            else if (action.payload.card.location ==="discardPile") {
+                if (action.payload.player ==="player"){         
+                    let newDiscardPile = state.discardPile.filter(card => card.id !== action.payload.card.card.id)
+                    let newPlayerHand = state.playerHand.slice()
+                    newPlayerHand.push(action.payload.card.card)
+
+                    return {...state, discardPile: newDiscardPile, playerHand: newPlayerHand}
+                }
+                else if (action.payload.player ==="opponent"){
+                    let newOpponentHand = state.opponentHand.slice()
+                    let newDiscardPile = state.discardPile.slice()
+                    let card = newDiscardPile.pop()
+                    newOpponentHand.push(card)
+                    return {...state, discardPile: newDiscardPile, opponentHand: newOpponentHand}
+                }
+            }  
             return {...state}
 
         case "PLAY_CARD":
