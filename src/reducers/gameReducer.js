@@ -134,7 +134,7 @@ const gameReducer = (state= initialState, action) => {
                     draw= newDrawPile.pop()  
                     newOpponentHand.push(draw)
                 })
-            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand}
+            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, status: action.payload.status}}
 
         case "UPDATE_STATUS":
             return {...state, game: {...state.game, status: action.payload}}
