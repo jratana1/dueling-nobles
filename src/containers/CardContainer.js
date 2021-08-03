@@ -11,7 +11,7 @@ export default function CardContainer(props)  {
 
   const { count, setCount, height, cardId, dropZone, gameChannel } = props
   const [self] = useState(cardId)
-  const [setTap] = useState(false)
+  const [tap, setTap] = useState(false)
   const stageCanvasRef = useRef(null);
   const [cardHeight, setCardHeight] =  useState(null)
   const [cardWidth, setCardWidth] =  useState(null)

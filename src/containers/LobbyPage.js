@@ -169,7 +169,7 @@ function LobbyPage(props) {
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>\
             {/* Lobby is room 267 in development, Lobby is room 1 in production */}
-              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={1}/>
+              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={267}/>
             </Paper>
           </Grid>
         </Box>
