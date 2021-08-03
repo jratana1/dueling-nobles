@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/dueling-nobles/static/css/main.83a9a3e9.chunk.css",
+    "main.js": "/dueling-nobles/static/js/main.ffeb1347.chunk.js",
+    "main.js.map": "/dueling-nobles/static/js/main.ffeb1347.chunk.js.map",
+    "runtime-main.js": "/dueling-nobles/static/js/runtime-main.5da1cd70.js",
+    "runtime-main.js.map": "/dueling-nobles/static/js/runtime-main.5da1cd70.js.map",
+    "static/js/2.df0a711a.chunk.js": "/dueling-nobles/static/js/2.df0a711a.chunk.js",
+    "static/js/2.df0a711a.chunk.js.map": "/dueling-nobles/static/js/2.df0a711a.chunk.js.map",
+    "static/js/3.52b36e28.chunk.js": "/dueling-nobles/static/js/3.52b36e28.chunk.js",
+    "static/js/3.52b36e28.chunk.js.map": "/dueling-nobles/static/js/3.52b36e28.chunk.js.map",
+    "index.html": "/dueling-nobles/index.html",
+    "static/css/main.83a9a3e9.chunk.css.map": "/dueling-nobles/static/css/main.83a9a3e9.chunk.css.map",
+    "static/js/2.df0a711a.chunk.js.LICENSE.txt": "/dueling-nobles/static/js/2.df0a711a.chunk.js.LICENSE.txt",
+    "static/media/20200715_112939.5b54978b.jpg": "/dueling-nobles/static/media/20200715_112939.5b54978b.jpg",
+    "static/media/card-back1.502e9846.png": "/dueling-nobles/static/media/card-back1.502e9846.png",
+    "static/media/card-diamonds-5.fb16c258.png": "/dueling-nobles/static/media/card-diamonds-5.fb16c258.png",
+    "static/media/logo.6ce24c58.svg": "/dueling-nobles/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5da1cd70.js",
+    "static/js/2.df0a711a.chunk.js",
+    "static/css/main.83a9a3e9.chunk.css",
+    "static/js/main.ffeb1347.chunk.js"
+  ]
+}
