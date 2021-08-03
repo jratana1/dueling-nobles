@@ -9,14 +9,16 @@ import Header from './components/header'
 import './App.css';
 import Landing from './containers/landing'
 
-export const BASE_URL = "http://localhost:3000/";
+// export const BASE_URL = "http://localhost:3000/";
+export const BASE_URL = "https://damp-eyrie-01599.herokuapp.com/";
+
 
 
 function App() {
   const [isBusy, setBusy] = useState(true)
   const [loggedIn, setLoggedIn] = useState(false);
-  const [cable] = useState(Cable.createConsumer('ws://localhost:3000/cable'))
-  //   const cable = Cable.createConsumer('wss://chat-n-draw.herokuapp.com/cable');
+  // const [cable] = useState(Cable.createConsumer('ws://localhost:3000/cable'))
+  const [cable] = usetState(Cable.createConsumer('wss://damp-eyrie-01599.herokuapp.com/cable'))
 
   
 
