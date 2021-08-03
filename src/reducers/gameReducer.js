@@ -38,12 +38,14 @@ const gameReducer = (state= initialState, action) => {
         case "DRAW_CARD":
   
             if (action.payload.card.location ==="drawPile") {
+  
                 if (action.payload.player ==="player"){
                     let newPlayerHand = state.playerHand.slice()
                     let newDrawPile = state.drawPile.slice()
                     let card = newDrawPile.pop()
                     card.image= action.payload.playerHand[action.payload.playerHand.length-1]
                     newPlayerHand.push(card)
+                   
                     return {...state, drawPile: newDrawPile, playerHand: newPlayerHand}
                 }
                 else if (action.payload.player ==="opponent"){
@@ -55,15 +57,20 @@ const gameReducer = (state= initialState, action) => {
                 }
             }
             else if (action.payload.card.location ==="playerHand") {
-       
-                if (action.payload.player ==="player"){
-                
+                if (action.payload.player ==="player"){         
                     let newPlayerHand = state.playerHand.filter(card => card.id !== action.payload.card.card.id)
                     let newDiscardPile = state.discardPile.slice()
-                    // newPlayerHand= newPlayerHand.filter(card => card.id !== action.payload.card.card.id)
                     newDiscardPile.push(action.payload.card.card)
-                    debugger
+
                     return {...state, discardPile: newDiscardPile, playerHand: newPlayerHand}
+                }
+                else if (action.payload.player ==="opponent"){
+                    let newOpponentHand = state.opponentHand.slice()
+                    let newDiscardPile = state.discardPile.slice()
+                    let card = newOpponentHand.pop()
+                    card.image= action.payload.card.card.image
+                    newDiscardPile.push(card)
+                    return {...state, discardPile: newDiscardPile, opponentHand: newOpponentHand}
                 }
             }  
             return {...state}
@@ -132,6 +139,7 @@ const gameReducer = (state= initialState, action) => {
             newPlayerHand = state.playerHand.slice()
             newDrawPile = state.drawPile.slice()
             newOpponentHand = state.opponentHand.slice()
+            let newDiscardPile = state.discardPile.slice()
                                     
             action.payload.playerHand.forEach((imageId) => {
                     let draw= newDrawPile.pop()
@@ -143,8 +151,18 @@ const gameReducer = (state= initialState, action) => {
                 let draw= newDrawPile.pop()  
                 newOpponentHand.push(draw)
             }
+
+            action.payload.discardPile.forEach((imageId) => {
+                let draw= newDrawPile.pop()
+                draw.image = imageId
+                newDiscardPile.push(draw)  
+        })
         
-        return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, status: action.payload.status}}
+        return {...state, playerHand: newPlayerHand, 
+                          discardPile: newDiscardPile,
+                          drawPile: newDrawPile,
+                          opponentHand: newOpponentHand,
+                          game: {...state.game, status: action.payload.status}}
 
         default:
             return {...state}

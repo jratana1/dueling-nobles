@@ -131,6 +131,7 @@ function RoomPage(props) {
   const dispatch = useDispatch();
   const players = useSelector(state => state.game.players);
   const status = useSelector(state => state.game.game.status);
+  const discardPile = useSelector(state => state.game.discardPile);
   const drawPile = useSelector(state => state.game.drawPile);
 
 

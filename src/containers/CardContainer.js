@@ -70,11 +70,20 @@ export default function CardContainer(props)  {
       for(let i=0; i<discardPile.length; i++) {
         if (discardPile[i].id === self) {
           setPos({pos: [dropZone.dropX, dropZone.dropY]})
+          setFlipped(true)
+        
+          stageCanvasRef.current.style.zIndex= i
         }
       }
     }
 
-  },[flag, playerHand, opponentHand])
+    if(drawPile.length>0)
+      for(let i=0; i<drawPile.length; i++) {
+        if (drawPile[i].id === self) {
+          setPos({...pos, pos: [10+cardId, height/2-cardHeight]})
+      }
+    }
+  },[flag, playerHand, opponentHand, drawPile])
   
     const bind = useDrag(
         ({ down, movement: xy, tap }) => {

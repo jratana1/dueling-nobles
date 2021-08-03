@@ -118,6 +118,7 @@ useEffect( () => {
               }
               if (data.action === "drawing") {        
                 console.log("drawing a damn card")  
+
                 dispatch(drawCard(data))
               }
             },
@@ -126,6 +127,7 @@ useEffect( () => {
               });
             },
             draw: function(card) {
+        
                 this.perform('draw', {
                     card: card
                 });
