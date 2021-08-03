@@ -135,7 +135,7 @@ function RoomPage(props) {
     fetch(BASE_URL+`rooms/${id}`, config)
     .then(res => res.json())
     .then(res => {
-        console.log(res)
+    console.log(res)
     dispatch(setPlayers(res.players))
     dispatch(loadGame(res.game))
 
@@ -187,12 +187,12 @@ function RoomPage(props) {
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Typography variant="subtitle1" align="center" style={{ padding: "8px 0" }}>
-                        Player 1: {players.player1}
+                        Player 1: {players ? players.player1 : ""}
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
                     <Typography variant="subtitle1" align="center" style={{ padding: "8px 0" }}>
-                        Player 2: {players.player2}
+                        Player 2: {players ? players.player2 : ""}
                     </Typography>
                 </Grid>
             </Grid>

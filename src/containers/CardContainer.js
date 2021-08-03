@@ -84,7 +84,7 @@ export default function CardContainer(props)  {
           setPos({...pos, pos: [10+cardId, height/2-cardHeight]})
       }
     }
-  },[flag, playerHand, opponentHand, drawPile, cardHeight, cardId, cardWidth, discardPile, dropZone.dropX, dropZone.dropY, height, pos, self, setPos])
+  },[flag, playerHand, opponentHand, drawPile, cardHeight, cardId, cardWidth, discardPile, height, pos, self, setPos])
   
     const bind = useDrag(
         ({ down, movement: xy, tap }) => {

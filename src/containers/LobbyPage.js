@@ -168,7 +168,7 @@ function LobbyPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={1}/>
+              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={267}/>
             </Paper>
           </Grid>
         </Box>

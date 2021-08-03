@@ -156,23 +156,25 @@ const gameReducer = (state= initialState, action) => {
             newDrawPile = state.drawPile.slice()
             newOpponentHand = state.opponentHand.slice()
             let newDiscardPile = state.discardPile.slice()
-                                    
+           
+            if (action.payload.playerHand.length>0)   {               
             action.payload.playerHand.forEach((imageId) => {
                     let draw= newDrawPile.pop()
                     draw.image = imageId
                     newPlayerHand.push(draw)  
             })
+            }   
 
             for(var i=0; i < action.payload.opponentHand ; i++){
                 let draw= newDrawPile.pop()  
                 newOpponentHand.push(draw)
             }
-
+            if (action.payload.discardPile.length>0)   { 
             action.payload.discardPile.forEach((imageId) => {
                 let draw= newDrawPile.pop()
                 draw.image = imageId
                 newDiscardPile.push(draw)  
-        })
+            })}
         
         return {...state, playerHand: newPlayerHand, 
                           discardPile: newDiscardPile,
