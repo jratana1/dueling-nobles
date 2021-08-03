@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { HashRouter, Route, Link, Switch} from 'react-router-dom';
+import { HashRouter, Route, Switch} from 'react-router-dom';
 import Cable from 'actioncable';
 
 import RoomPage from './containers/RoomPage'
@@ -15,10 +15,10 @@ export const BASE_URL = "https://damp-eyrie-01599.herokuapp.com/";
 
 
 function App() {
-  const [isBusy, setBusy] = useState(true)
+  // const [isBusy, setBusy] = useState(true)
   const [loggedIn, setLoggedIn] = useState(false);
   // const [cable] = useState(Cable.createConsumer('ws://localhost:3000/cable'))
-  const [cable] = usetState(Cable.createConsumer('wss://damp-eyrie-01599.herokuapp.com/cable'))
+  const [cable] = useState(Cable.createConsumer('wss://damp-eyrie-01599.herokuapp.com/cable'))
 
   
 
