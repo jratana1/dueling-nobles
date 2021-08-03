@@ -36,7 +36,7 @@ const gameReducer = (state= initialState, action) => {
     
     switch(action.type){
         case "DRAW_CARD":
-  
+
             if (action.payload.card.location ==="drawPile") {
   
                 if (action.payload.player ==="player"){
@@ -46,14 +46,14 @@ const gameReducer = (state= initialState, action) => {
                     card.image= action.payload.playerHand[action.payload.playerHand.length-1]
                     newPlayerHand.push(card)
                    
-                    return {...state, drawPile: newDrawPile, playerHand: newPlayerHand}
+                    return {...state, drawPile: newDrawPile, playerHand: newPlayerHand, game: {...state.game, turn: action.payload.turn}}
                 }
                 else if (action.payload.player ==="opponent"){
                     let newOpponentHand = state.opponentHand.slice()
                     let newDrawPile = state.drawPile.slice()
                     let card = newDrawPile.pop()
                     newOpponentHand.push(card)
-                    return {...state, drawPile: newDrawPile, opponentHand: newOpponentHand}
+                    return {...state, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, turn: action.payload.turn}}
                 }
             }
             else if (action.payload.card.location ==="playerHand") {
@@ -62,7 +62,7 @@ const gameReducer = (state= initialState, action) => {
                     let newDiscardPile = state.discardPile.slice()
                     newDiscardPile.push(action.payload.card.card)
 
-                    return {...state, discardPile: newDiscardPile, playerHand: newPlayerHand}
+                    return {...state, discardPile: newDiscardPile, playerHand: newPlayerHand, game: {...state.game, turn: action.payload.turn}}
                 }
                 else if (action.payload.player ==="opponent"){
                     let newOpponentHand = state.opponentHand.slice()
@@ -70,7 +70,7 @@ const gameReducer = (state= initialState, action) => {
                     let card = newOpponentHand.pop()
                     card.image= action.payload.card.card.image
                     newDiscardPile.push(card)
-                    return {...state, discardPile: newDiscardPile, opponentHand: newOpponentHand}
+                    return {...state, discardPile: newDiscardPile, opponentHand: newOpponentHand, game: {...state.game, turn: action.payload.turn}}
                 }
             }  
             else if (action.payload.card.location ==="discardPile") {
@@ -79,14 +79,14 @@ const gameReducer = (state= initialState, action) => {
                     let newPlayerHand = state.playerHand.slice()
                     newPlayerHand.push(action.payload.card.card)
 
-                    return {...state, discardPile: newDiscardPile, playerHand: newPlayerHand}
+                    return {...state, discardPile: newDiscardPile, playerHand: newPlayerHand, game: {...state.game, turn: action.payload.turn}}
                 }
                 else if (action.payload.player ==="opponent"){
                     let newOpponentHand = state.opponentHand.slice()
                     let newDiscardPile = state.discardPile.slice()
                     let card = newDiscardPile.pop()
                     newOpponentHand.push(card)
-                    return {...state, discardPile: newDiscardPile, opponentHand: newOpponentHand}
+                    return {...state, discardPile: newDiscardPile, opponentHand: newOpponentHand, game: {...state.game, turn: action.payload.turn}}
                 }
             }  
             return {...state}

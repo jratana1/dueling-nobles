@@ -119,6 +119,8 @@ function RoomPage(props) {
   const dispatch = useDispatch();
   const players = useSelector(state => state.game.players);
   const status = useSelector(state => state.game.game.status);
+  const turn = useSelector(state => state.game.game.turn);
+      
 
 
 
@@ -185,14 +187,20 @@ function RoomPage(props) {
         <Box clone order={{ xs: 2, md: 3 }} className={classes.buttonColumn}>
           <Grid item xs={12} sm={4} md={3}>
             <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <Typography variant="subtitle1" align="center" style={{ padding: "8px 0" }}>
-                        Player 1: {players ? players.player1 : ""}
+                <Grid item xs={6}> 
+                    <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
+                        {!(turn%2) ? "Your Turn!" : ""}
+                    </Typography>
+                    <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
+                        Player 1: {players ? players.player1 : " "}
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant="subtitle1" align="center" style={{ padding: "8px 0" }}>
-                        Player 2: {players ? players.player2 : ""}
+                    <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
+                        {turn%2 ? "Your Turn!" : ""}
+                    </Typography>
+                    <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
+                        Player 2: {players ? players.player2 : " "}
                     </Typography>
                 </Grid>
             </Grid>
