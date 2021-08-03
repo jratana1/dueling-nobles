@@ -167,9 +167,9 @@ function LobbyPage(props) {
       <Grid container spacing={2} className={classes.mainGrid}>
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
-            <Paper className={classes.chatColumnPaper}>\
+            <Paper className={classes.chatColumnPaper}>
             {/* Lobby is room 267 in development, Lobby is room 1 in production */}
-              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={267}/>
+              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={1}/>
             </Paper>
           </Grid>
         </Box>
