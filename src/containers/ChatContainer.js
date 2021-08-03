@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { setPlayers, updateGame, updateStatus } from "../actions/gameActions";
+import { useDispatch } from 'react-redux'
+import { setPlayers, updateStatus } from "../actions/gameActions";
 
 import Chat from '../components/chat'
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,9 +28,8 @@ const useStyles = makeStyles({
 function ChatContainer(props) {;
   const [currentMessage, setcurrentMessage] = useState("")
   const [chat, setChat] = useState([]) 
-  const { loggedIn, title, roomId, cable, setGames, joining, waiting, setJoining, setWaiting} = props
+  const { loggedIn, title, roomId, cable, setGames, joining,  setJoining,} = props
 
-  const players = useSelector(state => state.game.players);
   const dispatch= useDispatch()
 
   const chatChannel = useRef(null);
@@ -91,7 +90,7 @@ function ChatContainer(props) {;
           return () => {
                 cable.subscriptions.remove(chatChannel.current)
           }
-        }, [roomId])
+        }, [roomId, cable.subscriptions, dispatch, setGames])
 
         useEffect(
           () => {
@@ -100,7 +99,7 @@ function ChatContainer(props) {;
             setJoining(false)
             }
         }
-        , [joining])
+        , [joining, setJoining])
 
   const handleSendEvent = () => {
         if (!currentMessage || !loggedIn) { 

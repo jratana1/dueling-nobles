@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import Link from "@material-ui/core/Link";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Table from "@material-ui/core/Table";
@@ -114,17 +113,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-// Add separators to a large number, every 3 digits, while also displaying in
-// a span that is styled with equal width numerals.
-//   humanize(12345) -> "12,345"
-function humanize(number) {
-  return (
-    <span style={{ fontVariantNumeric: "tabular-nums" }}>
-      {number.toLocaleString()}
-    </span>
-  );
-}
 
 function LobbyPage(props) {
   

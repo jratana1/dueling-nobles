@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import Tooltip from "@material-ui/core/Tooltip";
 
 import ChatContainer from "./ChatContainer"
 import GameContainer from "./GameContainer";
@@ -109,17 +108,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Add separators to a large number, every 3 digits, while also displaying in
-// a span that is styled with equal width numerals.
-//   humanize(12345) -> "12,345"
-function humanize(number) {
-  return (
-    <span style={{ fontVariantNumeric: "tabular-nums" }}>
-      {number.toLocaleString()}
-    </span>
-  );
-}
-
 function RoomPage(props) {
   
   const classes = useStyles();
@@ -131,8 +119,6 @@ function RoomPage(props) {
   const dispatch = useDispatch();
   const players = useSelector(state => state.game.players);
   const status = useSelector(state => state.game.game.status);
-  const discardPile = useSelector(state => state.game.discardPile);
-  const drawPile = useSelector(state => state.game.drawPile);
 
 
 
@@ -162,7 +148,7 @@ function RoomPage(props) {
         dispatch(clearGame())
     })
 
-  },[])
+  },[dispatch, id])
 
   const clickStartGame = () => {
     dispatch(updateStatus("started"))

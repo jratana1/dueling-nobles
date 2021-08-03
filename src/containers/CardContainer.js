@@ -9,9 +9,9 @@ import { useSelector } from "react-redux";
 export default function CardContainer(props)  {
   const [flipped, setFlipped] = useState(false)
 
-  const { count, setCount, height, width, cardId, dropZone, gameChannel } = props
+  const { count, setCount, height, cardId, dropZone, gameChannel } = props
   const [self] = useState(cardId)
-  const [ tap, setTap] = useState(false)
+  const [setTap] = useState(false)
   const stageCanvasRef = useRef(null);
   const [cardHeight, setCardHeight] =  useState(null)
   const [cardWidth, setCardWidth] =  useState(null)
@@ -33,9 +33,9 @@ export default function CardContainer(props)  {
         setPos({...pos, pos: [10+cardId, height/2-cardHeight]})
       }
     }
-    
+  
   },
-  [flag, width, height])
+  [flag, cardHeight, height, cardId, drawPile, pos, self, setPos])
 
   useEffect( () => {
     // The 'current' property contains info of the reference:
@@ -84,7 +84,7 @@ export default function CardContainer(props)  {
           setPos({...pos, pos: [10+cardId, height/2-cardHeight]})
       }
     }
-  },[flag, playerHand, opponentHand, drawPile])
+  },[flag, playerHand, opponentHand, drawPile, cardHeight, cardId, cardWidth, discardPile, dropZone.dropX, dropZone.dropY, height, pos, self, setPos])
   
     const bind = useDrag(
         ({ down, movement: xy, tap }) => {

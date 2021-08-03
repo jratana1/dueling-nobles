@@ -5,11 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { setFlag, dealGame, updateGame, drawCard } from "../actions/gameActions";
+import { dealGame, drawCard } from "../actions/gameActions";
 import blank from '../assets/card-blank.png'
 
 
@@ -67,19 +65,14 @@ const classes = useStyles();
 const gameBoxRef = useRef(null);
 const discardRef = useRef(null);
 
-const {  setStatus, roomId, cable} = props
+const { roomId, cable} = props
 
 const [height, setHeight] =  useState(null)
 const [width, setWidth] =  useState(null)
 const [dropZone, setDropZone] = useState(null)
-const [deck, setDeck] = useState([...Array(52).keys()]);
+const [deck] = useState([...Array(52).keys()]);
 const [count, setCount] = useState(0)
 const gameChannel = useRef(null);
-
-const playerHand = useSelector(state => state.game.playerHand);
-const opponentHand = useSelector(state => state.game.opponentHand);
-const drawPile = useSelector(state => state.game.drawPile);
-const available = useSelector(state => state.game.available);
 const status = useSelector(state => state.game.game.status);
 
 
@@ -139,8 +132,7 @@ useEffect( () => {
         }
     }
 
-
-}, [status])
+}, [status, cable.subscriptions, dispatch, roomId])
     
 const renderDeck = () => {
     return (
