@@ -19,9 +19,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import ElapsedTime from "../components/elapsedTime"
-
 import ChatContainer from "./ChatContainer"
-import { BASE_URL } from '../App'
+import { BASE_URL, LOBBY_ID} from '../App'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -168,8 +167,7 @@ function LobbyPage(props) {
         <Box clone order={{ xs: 3, md: 1 }} className={classes.chatColumn}>
           <Grid item xs={12} sm={12} md={3}>
             <Paper className={classes.chatColumnPaper}>
-            {/* Lobby is room 267 in development, Lobby is room 1 in production */}
-              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={1}/>
+              <ChatContainer setGames={setGames} cable={cable} loggedIn={loggedIn} title={"Lobby Chat"} roomId={LOBBY_ID}/>
             </Paper>
           </Grid>
         </Box>
