@@ -6,11 +6,6 @@ function makeDrawPile() {
     return drawPile
 }
 
-// function popRandom (array) {
-//     let i = (Math.random() * array.length) | 0
-//     return array.splice(i, 1)[0]
-//   }
-
 const initialState = {
     available: [...Array(52).keys()],
     flag: false,
@@ -20,11 +15,8 @@ const initialState = {
     discardPile: [],
     turn: true,
     players: {player1: "", player2: ""},
+    seat: null,
     game: { status: null,
-            // playerHand: [],
-            // opponentHand: [],
-            // drawPile: makeDrawPile(),
-            // discardPile: [],
             turn: 0}
 }
 
@@ -156,7 +148,7 @@ const gameReducer = (state= initialState, action) => {
             newDrawPile = state.drawPile.slice()
             newOpponentHand = state.opponentHand.slice()
             let newDiscardPile = state.discardPile.slice()
-           
+            let seat
             if (action.payload.playerHand.length>0)   {               
             action.payload.playerHand.forEach((imageId) => {
                     let draw= newDrawPile.pop()
@@ -171,16 +163,24 @@ const gameReducer = (state= initialState, action) => {
             }
             if (action.payload.discardPile.length>0)   { 
             action.payload.discardPile.forEach((imageId) => {
+
                 let draw= newDrawPile.pop()
                 draw.image = imageId
                 newDiscardPile.push(draw)  
             })}
-        
+
+            if (action.payload.seat === "player1"){
+                seat = 0
+            }
+            else {
+                seat = 1
+            }
         return {...state, playerHand: newPlayerHand, 
                           discardPile: newDiscardPile,
                           drawPile: newDrawPile,
                           opponentHand: newOpponentHand,
-                          game: {...state.game, status: action.payload.status}}
+                          seat: seat,
+                          game: {...state.game, status: action.payload.status, turn: action.payload.turn}}
 
         default:
             return {...state}

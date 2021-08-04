@@ -74,6 +74,8 @@ const [deck] = useState([...Array(52).keys()]);
 const [count, setCount] = useState(0)
 const gameChannel = useRef(null);
 const status = useSelector(state => state.game.game.status);
+const turn = useSelector(state => state.game.game.turn);
+
 
 
 const dispatch = useDispatch();
@@ -121,7 +123,6 @@ useEffect( () => {
               });
             },
             draw: function(card) {
-        
                 this.perform('draw', {
                     card: card
                 });

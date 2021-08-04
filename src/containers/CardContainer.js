@@ -21,7 +21,8 @@ export default function CardContainer(props)  {
   const drawPile = useSelector(state => state.game.drawPile);
   const discardPile = useSelector(state => state.game.discardPile);
   const status = useSelector(state => state.game.game.status);
-
+  const turn = useSelector(state => state.game.game.turn);
+  const seat = useSelector(state => state.game.seat);
 
 
   const [{ pos }, setPos] = useSpring(() => ({ pos: [0, 0], config: {mass: 2, tension: 100, friction: 50}
@@ -117,29 +118,20 @@ export default function CardContainer(props)  {
   
     }
     const onCardClick = (event) => { 
-      setCount(count+1)
-      event.currentTarget.style.zIndex= count
 
-      let found = findCard(self)
-      // let found = drawPile.find((element) => {
-      //   return(element.id === self)})
-      if (status ==="playing"){
-        gameChannel.current.draw(found)
-      }
-        // if (found.location==="drawPile" && status ==="playing"){
-        //   gameChannel.current.draw(found.card)
-        // }
-        // if (found==="playerHand" && status ==="playing"){
-        //   gameChannel.current.draw(found.card)
-        // }
-      // found = drawPile.find((element) => {
-      //     return(element.id === self)})
-
+      if ( turn%2 === seat){
+        setCount(count+1)
+        event.currentTarget.style.zIndex= 2500 + count
+          let found = findCard(self)
+          if (status ==="playing"){
+            gameChannel.current.draw(found)
+          }
+        }
       }
 
     const onMouseDown = (event) => {
       setCount(count+1)
-      event.currentTarget.style.zIndex= count
+      event.currentTarget.style.zIndex= 2500 + count
       }
   
 

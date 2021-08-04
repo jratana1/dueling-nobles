@@ -187,18 +187,18 @@ function RoomPage(props) {
         <Box clone order={{ xs: 2, md: 3 }} className={classes.buttonColumn}>
           <Grid item xs={12} sm={4} md={3}>
             <Grid container spacing={2}>
-                <Grid item xs={6}> 
-                    <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
-                        {!(turn%2) ? "Your Turn!" : ""}
-                    </Typography>
+                <Grid item xs={6} > 
+                    {<Typography variant="subtitle2" align="center" style={{ backgroundColor: !(turn%2) ? "gray" : null, padding: "8px 0" }}>
+                        {!(turn%2) ? "Your Turn!" : <span>&nbsp;&nbsp;</span>}
+                    </Typography>}
                     <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
                         Player 1: {players ? players.player1 : " "}
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
-                        {turn%2 ? "Your Turn!" : ""}
-                    </Typography>
+                    {<Typography variant="subtitle2" align="center" style={{ backgroundColor: (turn%2) ? "gray" : null, padding: "8px 0" }}>
+                        {(turn%2) ? "Your Turn!" : <span>&nbsp;&nbsp;</span>}
+                    </Typography>}
                     <Typography variant="subtitle2" align="center" style={{ padding: "8px 0" }}>
                         Player 2: {players ? players.player2 : " "}
                     </Typography>
