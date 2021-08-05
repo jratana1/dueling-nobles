@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { dealGame, drawCard } from "../actions/gameActions";
+import { dealGame, drawCard, incrementTurn } from "../actions/gameActions";
 import blank from '../assets/card-blank.png'
 
 
@@ -123,6 +123,7 @@ useEffect( () => {
               });
             },
             draw: function(card) {
+                dispatch(incrementTurn())
                 this.perform('draw', {
                     card: card
                 });

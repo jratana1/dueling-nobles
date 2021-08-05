@@ -59,3 +59,9 @@ export const clearGame = () => {
     }
 }
 
+export const incrementTurn = () => {
+    return {
+        type: 'INCREMENT_TURN'
+    }
+}
+

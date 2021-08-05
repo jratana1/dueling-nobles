@@ -185,7 +185,8 @@ const gameReducer = (state= initialState, action) => {
         default:
             return {...state}
         
-
+        case "INCREMENT_TURN":
+            return {...state, game: {...state.game, turn: state.game.turn + 1}}
 
     }
 }

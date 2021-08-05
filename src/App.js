@@ -9,17 +9,17 @@ import Header from './components/header'
 import './App.css';
 import Landing from './containers/landing'
 
-// export const LOBBY_ID = 267
-// export const BASE_URL = "http://localhost:3000/";
-export const LOBBY_ID = 1
-export const BASE_URL = "https://damp-eyrie-01599.herokuapp.com/";
+export const LOBBY_ID = 267
+export const BASE_URL = "http://localhost:3000/";
+// export const LOBBY_ID = 1
+// export const BASE_URL = "https://damp-eyrie-01599.herokuapp.com/";
 
 
 
 
 function App() {
-  // const [cable] = useState(Cable.createConsumer('ws://localhost:3000/cable'))
-  const [cable] = useState(Cable.createConsumer('wss://damp-eyrie-01599.herokuapp.com/cable'))
+  const [cable] = useState(Cable.createConsumer('ws://localhost:3000/cable'))
+  // const [cable] = useState(Cable.createConsumer('wss://damp-eyrie-01599.herokuapp.com/cable'))
   
   // const [isBusy, setBusy] = useState(true)
   const [loggedIn, setLoggedIn] = useState(false);
