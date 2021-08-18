@@ -25,6 +25,7 @@ const gameReducer = (state= initialState, action) => {
     let newPlayerHand
     let newDrawPile
     let newOpponentHand
+    let seat
     
     switch(action.type){
         case "DRAW_CARD":
@@ -126,7 +127,14 @@ const gameReducer = (state= initialState, action) => {
                     draw= newDrawPile.pop()  
                     newOpponentHand.push(draw)
                 })
-            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, game: {...state.game, status: action.payload.status}}
+    
+            if (action.payload.seat === "player1"){
+                seat = 0
+            }
+            else {
+                seat = 1
+            }
+            return {...state, playerHand: newPlayerHand, drawPile: newDrawPile, opponentHand: newOpponentHand, seat: seat, game: {...state.game, status: action.payload.status}}
 
         case "UPDATE_STATUS":
             return {...state, game: {...state.game, status: action.payload}}
@@ -148,7 +156,7 @@ const gameReducer = (state= initialState, action) => {
             newDrawPile = state.drawPile.slice()
             newOpponentHand = state.opponentHand.slice()
             let newDiscardPile = state.discardPile.slice()
-            let seat
+ 
             if (action.payload.playerHand.length>0)   {               
             action.payload.playerHand.forEach((imageId) => {
                     let draw= newDrawPile.pop()
